@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import ErrorBoundary from './componets/routes/Not Found/ErrorBoundary';
+import Routes from './componets/routes/Routes';
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual';
+    const handleScroll = () => window.scrollTo(0, 0);
+    window.addEventListener('popstate', handleScroll);
+    return () => window.removeEventListener('popstate', handleScroll);
+  }, []);
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="home-bg-img">
+      <ErrorBoundary>
+            <Routes />
+      </ErrorBoundary>
     </div>
   );
-}
+};
 
 export default App;

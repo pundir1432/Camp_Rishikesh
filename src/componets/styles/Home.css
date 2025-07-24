@@ -1,0 +1,92 @@
+.custom-carousel-icon {
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.object-img {
+    width: 70%;
+    background-position: center;
+    background-size: cover;
+}
+
+.bonfire-img {
+    background-image: url('../assets/Mask\ group\ \(3\).png');
+    background-size: cover;
+    background-position: center;
+    height: 90vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.small-para {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter" sans-serif;
+}
+
+.main-heading {
+    font-size: 27px;
+    font-weight: 700;
+    font-family: "Inter" sans-serif;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-80px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.carousel-heading {
+    font-size: 30px;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    animation: slideDown 0.6s ease-out;
+}
+
+.section-name {
+    font-size: 15px !important;
+    font-family: "Inter" sans-serif;
+}
+
+.booking-form-section {
+    margin-top: -60px;
+    z-index: 2;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 768px) {
+    .bonfire-img {
+        height: 270px;
+        width: 100%;
+    }
+
+    .booking-form-section {
+        margin-top: 20px;
+    }
+
+    .carousel-heading {
+        font-size: 14px;
+    }
+
+    .main-heading {
+        font-size: 14px;
+    }
+
+    .small-para {
+        font-size: 12px;
+    }
+
+}

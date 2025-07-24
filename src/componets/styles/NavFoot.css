@@ -1,0 +1,133 @@
+/* Base Navbar Style */
+.custom-navbar {
+    transition: all 0.4s ease-in-out;
+    backdrop-filter: blur(0px);
+    background-color: transparent;
+    z-index: 1000;
+  }
+  
+  /* On Scroll: Add background, blur, shadow */
+  .navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: slideDownFade 0.4s ease-in-out forwards;
+  }
+  
+  /* Scroll Animation */
+  @keyframes slideDownFade {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+  
+  /* Logo Style */
+  .nav-logo {
+    width: 80px;
+    height: 50px !important;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  /* Nav Link Base Style */
+  .nav-link-name {
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Hover Effect */
+  .nav-link-name:hover {
+    font-weight: 600 !important;
+    border-radius: 50px !important;
+    background-color: transparent !important;
+    box-shadow: 0 4px 12px rgba(52, 94, 64, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  /* Button Style */
+  .nav-btn {
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    font-family: 'Inter', sans-serif;
+    padding: 5px 20px !important;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Overlay behind mobile menu */
+  .mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    display: none;
+  }
+  
+  .mobile-nav-overlay.show {
+    display: block;
+  }
+  
+  /* Mobile-specific styles */
+  @media (max-width: 991px) {
+    /* Nav links inside mobile */
+    .navbar-nav .nav-link {
+      padding: 10px 0;
+      font-size: 18px;
+    }
+  
+    .navbar-collapse form {
+      margin-top: 1rem;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    /* Collapse menu on left slide-in */
+    .collapse.navbar-collapse {
+      position: fixed;
+      top: 0;
+      left: 30%;
+      width: 70%;
+      height: 100vh;
+      background-color: white;
+      transition: left 0s ease-in-out;
+      z-index: 999;
+      color: black !important;
+      padding: 2rem;
+    }
+  
+    .collapse.navbar-collapse.show {
+      left: 0;
+    }
+  
+    /* Always black text/buttons in mobile */
+    .nav-link-name,
+    .navbar-brand,
+    .nav-btn {
+      color: black !important;
+      border-color: black !important;
+    }
+  
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+  }
+  
+  /* Mid-screen black text enforcement */
+  @media only screen and (min-width: 360px) and (max-width: 768px) {
+    .nav-link-name {
+      color: black !important;
+    }
+    .nav-btn {
+     color: black !important;
+      }
+  }
+  
