@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcamping_rishikesh=self.webpackChunkcamping_rishikesh||[]).push([[361],{4361:(s,e,h)=>{h.r(e),h.d(e,{default:()=>a});h(5043);var i=h(8602),c=h(3519),n=h(1072),r=h(579);const a=()=>(0,r.jsx)(r.Fragment,{children:(0,r.jsx)(c.A,{children:(0,r.jsx)(n.A,{children:(0,r.jsx)(i.A,{})})})})}}]);
+//# sourceMappingURL=361.e94ccc20.chunk.js.map
