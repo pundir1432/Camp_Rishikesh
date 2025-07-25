@@ -29,10 +29,10 @@ const Footer = () => {
               <Col xs={12} md={12}>
                 <h6 className="fw-bold mb-3">Sitemap</h6>
                 <ul className="list-unstyled d-flex justify-content-between">
-                  <li className='nav-item'><a class="nav-link nav-link-name active" aria-current="page" href="#">Home</a></li>
-                  <li className='nav-item'><a class="nav-link nav-link-name active" aria-current="page" href="#">Campingground</a></li>
-                  <li className='nav-item'><a class="nav-link nav-link-name active" aria-current="page" href="#">Near me</a></li>
-                  <li className='nav-item'><a class="nav-link nav-link-name active" aria-current="page" href="#">About</a></li>
+                  <li className='nav-item'><a className="nav-link nav-link-name active" aria-current="page" href="#">Home</a></li>
+                  <li className='nav-item'><a className="nav-link nav-link-name active" aria-current="page" href="#">Campingground</a></li>
+                  <li className='nav-item'><a className="nav-link nav-link-name active" aria-current="page" href="#">Near me</a></li>
+                  <li className='nav-item'><a className="nav-link nav-link-name active" aria-current="page" href="#">About</a></li>
                 </ul>
               </Col>
               <Col xs={12} md={12}>

@@ -1,24 +1,21 @@
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import config from "../../config";
+import jwtDecode from "jwt-decode";
+import config from "../../../config";
 
-// axios.defaults.headers.post["Content-Type"] = "application/json";
+// Base URL for all requests
 axios.defaults.baseURL = config.API_URL;
+
+// Global Response Interceptor
 axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
     let message;
-    if (error && error.response && error.response.status === 404) {
-      message = error.response.data.message;
-      return Promise.reject(error.response.data.message);
-    } else if (error && error.response && error.response.status === 403) {
-      return Promise.reject(error.response.data.message);
-    } else {
-      switch (error.response.status) {
+    const status = error?.response?.status;
+
+    if (status) {
+      switch (status) {
         case 400:
-          message = error.response.data || "Error";
+          message = error.response.data || "Bad Request";
           break;
         case 401:
           message = error.response.data.message || "Invalid credentials";
@@ -29,30 +26,28 @@ axios.interceptors.response.use(
         case 404:
           message =
             error.response.data.message ||
-            "Sorry! the data you are looking for could not be found";
+            "Sorry! The data you are looking for could not be found";
           break;
-        default: {
-          message =
-            error.response && error.response.data
-              ? error.response.data
-              : error || error;
-        }
+        default:
+          message = error.response?.data || error.message || "An error occurred";
       }
-      return Promise.reject(message);
+    } else {
+      message = "Network error or server not responding.";
     }
+
+    return Promise.reject(message);
   }
 );
 
 const AUTH_SESSION_KEY = "camp_booking";
 
-/**
-* Sets the default authorization
-* @param {*} token
-*/
+// Set token in Axios default headers
 const setAuthorization = (token) => {
   if (token) axios.defaults.headers.common["Authorization"] = token;
   else delete axios.defaults.headers.common["Authorization"];
 };
+
+// Get user session from localStorage
 const getUserFromSession = () => {
   const raw = localStorage.getItem(AUTH_SESSION_KEY);
   try {
@@ -62,158 +57,117 @@ const getUserFromSession = () => {
     return null;
   }
 };
+
 class APICore {
-  /**
-   * Fetches data from given url
-   */
+  // Generic GET with query
   get = (url, params) => {
-    let queryString = "";
-    if (params) {
-      queryString = Object.keys(params)
-        .map((key) =>
-          encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
-        )
-        .join("&");
-    }
-    const fullUrl = queryString ? `${url}?${queryString}` : url;
-    return axios.get(fullUrl);
+    const queryString = params
+      ? "?" +
+        Object.entries(params)
+          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+          .join("&")
+      : "";
+    return axios.get(`${url}${queryString}`);
   };
+
+  // Download File (Blob)
   getFile = (url, params) => {
-    let response;
-    if (params) {
-      var queryString = params
-        ? Object.keys(params)
-          .map((key) => key + "=" + params[key])
+    const queryString = params
+      ? "?" +
+        Object.entries(params)
+          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
           .join("&")
-        : "";
-      response = axios.get(`${url}?${queryString}`, { responseType: "blob" });
-    } else {
-      response = axios.get(`${url}`, { responseType: "blob" });
-    }
-    return response;
+      : "";
+    return axios.get(`${url}${queryString}`, { responseType: "blob" });
   };
+
+  // Multiple GET requests
   getMultiple = (urls, params) => {
-    const reqs = [];
-    let queryString = "";
-    if (params) {
-      queryString = params
-        ? Object.keys(params)
-          .map((key) => key + "=" + params[key])
+    const queryString = params
+      ? "?" +
+        Object.entries(params)
+          .map(([k, v]) => `${k}=${v}`)
           .join("&")
-        : "";
-    }
-    for (const url of urls) {
-      reqs.push(axios.get(`${url}?${queryString}`));
-    }
-    return axios.all(reqs);
+      : "";
+    return axios.all(urls.map((url) => axios.get(`${url}${queryString}`)));
   };
 
-  /**
-   * post given data to url
-   */
-  create = (url, data) => {
-    return axios.post(url, data);
-  };
+  // POST
+  create = (url, data) => axios.post(url, data);
 
-  /**
-   * Updates patch data
-   */
-  updatePatch = (url, data) => {
-    return axios.patch(url, data);
-  };
+  // PUT
+  update = (url, data) => axios.put(url, data);
 
-  /**
-   * Updates data
-   */
-  update = (url, data) => {
-    return axios.put(url, data);
-  };
+  // PATCH
+  updatePatch = (url, data) => axios.patch(url, data);
 
-  /**
-   * Deletes data
-   */
-  delete = (url) => {
-    return axios.delete(url);
-  };
+  // DELETE
+  delete = (url) => axios.delete(url);
 
-  /**
-   * post given data to url with file
-   */
+  // POST with file upload
   createWithFile = (url, data) => {
     const formData = new FormData();
-    for (const k in data) {
-      formData.append(k, data[k]);
-    }
-    const config = {
-      headers: {
-        ...axios.defaults.headers,
-        "content-type": "multipart/form-data",
-      },
-    };
-    return axios.post(url, formData, config);
+    Object.entries(data).forEach(([k, v]) => formData.append(k, v));
+    return axios.post(url, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
-  /**
-   * post given data to url with file
-   */
+
+  // PATCH with file
   updateWithFile = (url, data) => {
     const formData = new FormData();
-    for (const k in data) {
-      formData.append(k, data[k]);
-    }
-    const config = {
-      headers: {
-        ...axios.defaults.headers,
-        "content-type": "multipart/form-data",
-      },
-    };
-    return axios.patch(url, formData, config);
+    Object.entries(data).forEach(([k, v]) => formData.append(k, v));
+    return axios.patch(url, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
+
+  // Check user auth
   isUserAuthenticated = () => {
     const user = this.getLoggedInUser();
-    if (!user || (user && !user.token)) {
-      return false;
-    }
-    const decoded = jwtDecode(user.token);
-    const currentTime = Date.now() / 1000;
-    if (decoded.exp < currentTime) {
-      localStorage.removeItem(AUTH_SESSION_KEY);
-      localStorage.clear();
-      window.location.href = "/camp/home";
-      return false;
-    } else {
+    if (!user?.token) return false;
+
+    try {
+      const decoded = jwtDecode(user.token);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        localStorage.removeItem(AUTH_SESSION_KEY);
+        localStorage.clear();
+        window.location.href = "/camp/home";
+        return false;
+      }
       return true;
+    } catch (err) {
+      return false;
     }
   };
+
   setLoggedInUser = (session) => {
-    if (session)
+    if (session) {
       localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
-    else {
+      setAuthorization(session.token);
+    } else {
       localStorage.removeItem(AUTH_SESSION_KEY);
+      setAuthorization(null);
     }
   };
-  /**
-   * Returns the logged in user
-   */
-  getLoggedInUser = () => {
-    return getUserFromSession();
-  };
+
+  getLoggedInUser = () => getUserFromSession();
+
   setUserInSession = (modifiedUser) => {
-    let userInfo = localStorage.getItem(AUTH_SESSION_KEY);
-    if (userInfo) {
-      const { token, user } = JSON.parse(userInfo);
-      this.setLoggedInUser({ token, ...user, ...modifiedUser });
+    const raw = localStorage.getItem(AUTH_SESSION_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const updated = { token: parsed.token, ...parsed.user, ...modifiedUser };
+      this.setLoggedInUser(updated);
     }
   };
 }
 
-/*
-Check if token available in session
-*/
-let user = getUserFromSession();
-if (user) {
-  const { token } = user;
-  if (token) {
-    setAuthorization(token);
-  }
+// Set token if available on page load
+const sessionUser = getUserFromSession();
+if (sessionUser?.token) {
+  setAuthorization(sessionUser.token);
 }
+
 export { APICore, setAuthorization, getUserFromSession };
