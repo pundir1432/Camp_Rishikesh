@@ -1,0 +1,14 @@
+export const ProductActionTypes = {
+
+    UPDATE_PROFILE_FIRST: '@@/products/UPDATE_PROFILE_FIRST',
+    UPDATE_PROFILE_LOADING: '@@/products/UPDATE_PROFILE_LOADING',
+    UPDATE_PROFILE_SUCCESS: '@@/products/UPDATE_PROFILE_SUCCESS',
+    UPDATE_PROFILE_ERROR: '@@/products/UPDATE_PROFILE_ERROR',
+    RESET_PROFILE: '@@/products/RESET_PROFILE',
+
+    GET_USER_FIRST: '@@/products/GET_USER_FIRST',
+    GET_USER_LOADING: '@@/products/GET_USER_LOADING',
+    GET_USER_SUCCESS: '@@/products/GET_USER_SUCCESS',
+    GET_USER_ERROR: '@@/products/GET_USER_ERROR',
+    GET_USER_RESET: '@@/products/GET_USER_RESET',
+}
