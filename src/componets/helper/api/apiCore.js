@@ -50,8 +50,9 @@ const setAuthorization = (token) => {
 // Get user session from localStorage
 const getUserFromSession = () => {
   const raw = localStorage.getItem(AUTH_SESSION_KEY);
+  console.log(raw,'rawraw');
   try {
-    return raw ? JSON.parse(raw) : null;
+    return raw ? JSON.parse(raw) : raw;
   } catch (e) {
     console.error("Invalid user data in session:", e);
     return null;
@@ -143,6 +144,7 @@ class APICore {
   };
 
   setLoggedInUser = (session) => {
+    console.log(session,'session');
     if (session) {
       localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
       setAuthorization(session.token);
