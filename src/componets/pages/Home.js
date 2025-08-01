@@ -4,12 +4,15 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/Home.css'
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import { CiCalendarDate } from "react-icons/ci";
-import { IoPersonOutline } from "react-icons/io5";
-import { IoHomeOutline } from "react-icons/io5";
-import { CheckCircle, WarningAmber } from '@mui/icons-material';
+import { MdOutlineDateRange } from "react-icons/md";
+import { IoMdPersonAdd } from "react-icons/io";
+import { IoHome } from "react-icons/io5";
+import {  WarningAmber } from '@mui/icons-material';
 import { FaCampground, FaCaravan, FaFire, FaHiking, FaHome, FaMountain, FaUmbrellaBeach, FaWater } from 'react-icons/fa';
 import Alert from '@mui/material/Alert';
+import { getUserFromSession } from '../helper/api/apiCore';
+import { useDispatch, useSelector } from 'react-redux';
+import { createBookingAction } from '../redux/booking/actions';
 
 const Home = () => {
 
@@ -18,13 +21,25 @@ const Home = () => {
     const [guests, setGuests] = useState('');
     const [accommodation, setAccommodation] = useState('');
     const [showAlert, setShowAlert] = useState(false);
+    const user = getUserFromSession()
+    const dispatch = useDispatch()
+    const store = useSelector((state)=>state)
+    const createBooking = store?.createBookingReducer?.data
+    console.log(createBooking,'createBooking');
 
     const handleBooking = () => {
         if (!checkIn || !checkOut || !guests || !accommodation) {
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
         } else {
-            console.log("Booking submitted!");
+            const payload = {
+                checkIn:checkIn,
+                checkOut:checkOut,
+                people:guests,
+                Accommodation:accommodation,
+                // userId:user?.id
+            }
+            dispatch(createBookingAction(payload))
         }
     };
     useEffect(() => {
@@ -103,38 +118,38 @@ const Home = () => {
                     <Row className="g-3 align-items-end">
                         <Col xs={6} md={3}>
                             <Form.Group className='text-start' controlId="checkIn">
-                                <Form.Label className='small-para text-color fw-bold'><CiCalendarDate size={20} className='mb-1 text-color' />Check In</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold'><MdOutlineDateRange size={15} className='mb-1 fw-bold text-color' /> CHECK IN</Form.Label>
                                 <Form.Control
                                     type="date"
                                     value={checkIn}
                                     onChange={(e) => setCheckIn(e.target.value)}
                                     style={{ boxShadow: "none", fontSize: "14px", fontFamily: "Inter" }}
-                                    className='border-0 border-bottom border-dark rounded-0'
+                                    className='border-0 fw-bold text-dark border-bottom border-dark rounded-0'
                                 />
                             </Form.Group>
                         </Col>
 
                         <Col xs={6} md={3}>
                             <Form.Group className='text-start' controlId="checkOut">
-                                <Form.Label className='small-para text-color fw-bold'><CiCalendarDate size={20} className='text-color mb-1' />Check Out</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold'><MdOutlineDateRange size={15} className='text-color fw-bold mb-1' /> CHECK OUT</Form.Label>
                                 <Form.Control
                                     type="date"
                                     value={checkOut}
                                     onChange={(e) => setCheckOut(e.target.value)}
                                     style={{ boxShadow: "none", fontSize: "14px", fontFamily: "Inter" }}
-                                    className='border-0 border-bottom border-dark rounded-0'
+                                    className='border-0 fw-bold text-dark border-bottom border-dark rounded-0'
                                 />
                             </Form.Group>
                         </Col>
 
                         <Col xs={6} md={2}>
                             <Form.Group className='text-start' controlId="guests">
-                                <Form.Label className='small-para text-color fw-bold'><IoPersonOutline size={15} className='mb-1 text-color' />Guests</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold'><IoMdPersonAdd size={15} className='mb-1 fw-bold text-color' /> GUESTS</Form.Label>
                                 <Form.Select
                                     value={guests}
                                     onChange={(e) => setGuests(e.target.value)}
                                     style={{ boxShadow: "none", fontSize: "14px", fontFamily: "Inter" }}
-                                    className='border-0 border-bottom border-dark rounded-0'
+                                    className='border-0 fw-bold text-dark border-bottom border-dark rounded-0'
                                 >
                                     <option value="">Select</option>
                                     <option>1 Guest</option>
@@ -147,12 +162,12 @@ const Home = () => {
 
                         <Col xs={6} md={2}>
                             <Form.Group className='text-start' controlId="accommodation">
-                                <Form.Label className='small-para text-color fw-bold'><IoHomeOutline size={15} className='text-color mb-1' />Accommodation</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold'><IoHome size={15} className='text-color fw-bold mb-1' /> ACCOMMODATION</Form.Label>
                                 <Form.Select
                                     value={accommodation}
                                     onChange={(e) => setAccommodation(e.target.value)}
                                     style={{ boxShadow: "none", fontSize: "14px", fontFamily: "Inter" }}
-                                    className='border-0 border-bottom border-dark rounded-0'
+                                    className='border-0 fw-bold text-dark border-bottom border-dark rounded-0'
                                 >
                                     <option value="">Select</option>
                                     <option>Camp</option>

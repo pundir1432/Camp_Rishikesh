@@ -17,25 +17,34 @@ const api = new APICore();
 function* login(action) {
     try {
         const response = yield call(loginApi, action.payload);
-        const user = response.data.user;
-        const userData = {
-            id: user.id,
-            firstName: user.name,
-            email: user.email,
-            phoneNumber: user.phone,
-            token: response.data.token,
-        };
+        console.log('Login response:', response);
 
-        localStorage.setItem('camp_booking', JSON.stringify(userData));
-        api.setLoggedInUser(userData);
-        setAuthorization(userData.token);
-        yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, userData));
+        const user = response?.data?.user;
+        const token = response?.data?.token;
+
+        if (user && token) {
+            const userData = {
+                id: user.id,
+                firstName: user.name,
+                email: user.email,
+                phoneNumber: user.phone,
+                token: token,
+                status:response?.data?.status
+            };
+
+            api.setLoggedInUser(userData);
+            setAuthorization(token);
+            yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, userData));
+        } else {
+            throw new Error("Invalid login response");
+        }
     } catch (error) {
         yield put(authApiResponseError(AuthActionTypes.LOGIN_USER, error));
         api.setLoggedInUser(null);
         setAuthorization(null);
     }
 }
+
 
 // SIGNUP
 function* signup(action) {

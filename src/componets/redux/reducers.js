@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
 import Auth from './auth/reducers';
-import { getUserReducer, updateProfileReducer } from './Profile/reducers';
+import { cancelBookingReducer, createBookingReducer, getBookingReducer, updateBookingReducer } from './booking/reducers';
 
 const rootReducer = combineReducers({
     Auth,
-    updateProfileReducer,
-    getUserReducer,
+   createBookingReducer,
+   getBookingReducer,
+   updateBookingReducer,
+   cancelBookingReducer
+
 });
 
 export default rootReducer;

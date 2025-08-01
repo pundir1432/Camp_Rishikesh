@@ -33,14 +33,8 @@ const SignIn = () => {
         verifyEmailData: state.Auth?.verifyEmailData
 
     }));
-    console.log(sentOTP, 'loading, userLoggedIn,sentOTP,userLogout, user, error');
+    console.log(user, 'user00');
 
-    useEffect(() => {
-        if (user) {
-            localStorage.setItem('camp_booking', user?.data)
-            navigate('/camp/home')
-        }
-    }, [user])
     const signinForm = useForm();
     const signupForm = useForm();
     const otpForm = useForm();
@@ -54,6 +48,12 @@ const SignIn = () => {
         };
         dispatch(loginUser(payload));
     };
+
+    useEffect(() => {
+        if (user?.status === 200) {
+            navigate('/camp/home')
+        }
+    }, [user?.status === 200])
 
     const handleSignUp = (data) => {
         setSignupEmail(data.email);
