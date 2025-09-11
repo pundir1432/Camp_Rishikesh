@@ -12,6 +12,11 @@ const LoginPage = React.lazy(() => import("../auth/SignIn"));
 // Lazy-loaded dashboard pages
 const Home = React.lazy(() => import("../pages/Home"));
 const About = React.lazy(() => import("../pages/About"));
+const Campground = React.lazy(() => import("../pages/Campground"));
+const Events = React.lazy(() => import("../pages/Events"));
+const NearMe = React.lazy(() => import("../pages/NearMe"));
+const Gallery = React.lazy(() => import("../pages/Gallery"));
+const Contact = React.lazy(() => import("../pages/Contact"));
 const NotFound = React.lazy(() => import("./Not Found/ErrorBoundary"));
 
 const loading = <div className="loading-spinner w-100 d-flex justify-content-center aling-items-center"><Loading /></div>;
@@ -30,6 +35,11 @@ const AllRoutes = () => {
       children: [
         { path: "home", element: <LoadComponent component={Home} /> },
         { path: "about", element: <LoadComponent component={About} /> },
+        { path: "campground", element: <LoadComponent component={Campground} /> },
+        { path: "events", element: <LoadComponent component={Events} /> },
+        { path: "nearme", element: <LoadComponent component={NearMe} /> },
+        { path: "gallery", element: <LoadComponent component={Gallery} /> },
+        { path: "contactus", element: <LoadComponent component={Contact} /> },
         { path: "*", element: <LoadComponent component={NotFound} /> },
       ],
     },

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ErrorBoundary from './componets/routes/Not Found/ErrorBoundary';
 import Routes from './componets/routes/Routes';
+import './componets/styles/MobileResponsive.css';
 
 const App = () => {
   useEffect(() => {

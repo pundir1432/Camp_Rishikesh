@@ -118,7 +118,11 @@ const Home = () => {
                     <Row className="g-3 align-items-end">
                         <Col xs={6} md={3}>
                             <Form.Group className='text-start' controlId="checkIn">
-                                <Form.Label className='small-para text-color fw-bold'><MdOutlineDateRange size={15} className='mb-1 fw-bold text-color' /> CHECK IN</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
+                                    <MdOutlineDateRange size={15} className='me-1 fw-bold text-color' /> 
+                                    <span className='d-none d-md-inline'>CHECK IN</span>
+                                    <span className='d-md-none'>IN</span>
+                                </Form.Label>
                                 <Form.Control
                                     type="date"
                                     value={checkIn}
@@ -131,7 +135,11 @@ const Home = () => {
 
                         <Col xs={6} md={3}>
                             <Form.Group className='text-start' controlId="checkOut">
-                                <Form.Label className='small-para text-color fw-bold'><MdOutlineDateRange size={15} className='text-color fw-bold mb-1' /> CHECK OUT</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
+                                    <MdOutlineDateRange size={15} className='me-1 text-color fw-bold' /> 
+                                    <span className='d-none d-md-inline'>CHECK OUT</span>
+                                    <span className='d-md-none'>OUT</span>
+                                </Form.Label>
                                 <Form.Control
                                     type="date"
                                     value={checkOut}
@@ -144,7 +152,10 @@ const Home = () => {
 
                         <Col xs={6} md={2}>
                             <Form.Group className='text-start' controlId="guests">
-                                <Form.Label className='small-para text-color fw-bold'><IoMdPersonAdd size={15} className='mb-1 fw-bold text-color' /> GUESTS</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
+                                    <IoMdPersonAdd size={15} className='me-1 fw-bold text-color' /> 
+                                    <span>GUESTS</span>
+                                </Form.Label>
                                 <Form.Select
                                     value={guests}
                                     onChange={(e) => setGuests(e.target.value)}
@@ -162,7 +173,11 @@ const Home = () => {
 
                         <Col xs={6} md={2}>
                             <Form.Group className='text-start' controlId="accommodation">
-                                <Form.Label className='small-para text-color fw-bold'><IoHome size={15} className='text-color fw-bold mb-1' /> ACCOMMODATION</Form.Label>
+                                <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
+                                    <IoHome size={15} className='me-1 text-color fw-bold' /> 
+                                    <span className='d-none d-md-inline'>ACCOMMODATION</span>
+                                    <span className='d-md-none'>TYPE</span>
+                                </Form.Label>
                                 <Form.Select
                                     value={accommodation}
                                     onChange={(e) => setAccommodation(e.target.value)}
@@ -177,7 +192,7 @@ const Home = () => {
                             </Form.Group>
                         </Col>
 
-                        <Col md={2} className="d-grid">
+                        <Col xs={12} md={2} className="d-grid mt-3 mt-md-0">
                             <Button
                                 variant="success"
                                 className="fw-semibold"
@@ -264,40 +279,40 @@ const Home = () => {
                         </Col>
 
                         <Col md={6}>
-                            <Row className="gy-4">
-                                <Col xs={6}>
-                                    <div className="d-flex flex-column align-items-start">
-                                        <FaMountain size={30} className="text-success mb-2" />
+                            <Row className="gy-4 activity-grid">
+                                <Col xs={6} sm={6} md={6}>
+                                    <div className="d-flex flex-column align-items-start text-center text-md-start">
+                                        <FaMountain size={30} className="text-success mb-2 mx-auto mx-md-0" />
                                         <h6 className="fw-bold section-name">Wild Life</h6>
-                                        <p className='text-start small-para text-muted'>
-                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Integer Egestas Nisi Nec Libero Fermentum.
+                                        <p className='text-muted small-para d-none d-md-block'>
+                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
                                         </p>
                                     </div>
                                 </Col>
-                                <Col xs={6}>
-                                    <div className="d-flex flex-column align-items-start">
-                                        <FaFire size={30} className="text-success mb-2" />
+                                <Col xs={6} sm={6} md={6}>
+                                    <div className="d-flex flex-column align-items-start text-center text-md-start">
+                                        <FaFire size={30} className="text-success mb-2 mx-auto mx-md-0" />
                                         <h6 className="fw-bold section-name">Bonfire</h6>
-                                        <p className='text-start text-muted small-para'>
-                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Integer Egestas Nisi Nec Libero Fermentum.
+                                        <p className='text-muted small-para d-none d-md-block'>
+                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
                                         </p>
                                     </div>
                                 </Col>
-                                <Col xs={6}>
-                                    <div className="d-flex flex-column align-items-start">
-                                        <FaWater size={30} className="text-success mb-2" />
+                                <Col xs={6} sm={6} md={6}>
+                                    <div className="d-flex flex-column align-items-start text-center text-md-start">
+                                        <FaWater size={30} className="text-success mb-2 mx-auto mx-md-0" />
                                         <h6 className="fw-bold section-name">Canoeing</h6>
-                                        <p className='text-start text-muted small-para'>
-                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Integer Egestas Nisi Nec Libero Fermentum.
+                                        <p className='text-muted small-para d-none d-md-block'>
+                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
                                         </p>
                                     </div>
                                 </Col>
-                                <Col xs={6}>
-                                    <div className="d-flex flex-column align-items-start">
-                                        <FaHiking size={30} className="text-success mb-2" />
+                                <Col xs={6} sm={6} md={6}>
+                                    <div className="d-flex flex-column align-items-start text-center text-md-start">
+                                        <FaHiking size={30} className="text-success mb-2 mx-auto mx-md-0" />
                                         <h6 className="fw-bold section-name">Hiking</h6>
-                                        <p className='text-start text-muted small-para'>
-                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Integer Egestas Nisi Nec Libero Fermentum.
+                                        <p className='text-muted small-para d-none d-md-block'>
+                                            Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
                                         </p>
                                     </div>
                                 </Col>
@@ -331,83 +346,83 @@ const Home = () => {
                     <h2 className="text-center fw-bold mb-5 main-heading">Book Your Dream<br />Vacation Now</h2>
 
                     <Row className="g-4">
-                        <Col md={6}>
-                            <div className="border shadow">
-                                <img src={vaction1_img} alt="Bell Glamp One" className="img-fluid w-100" />
+                        <Col xs={12} sm={6} md={6}>
+                            <div className="border shadow vacation-card">
+                                <img src={vaction1_img} alt="Bell Glamp One" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
                                 <div className="p-3 text-start">
-                                    <div className="d-flex justify-content-between">
-                                        <h6 className="text-success section-name fw-bold">Bell Glamp One</h6>
-                                        <div className="d-flex gap-3 justify-content-between text-muted small">
+                                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
+                                        <h6 className="text-success section-name fw-bold mb-2 mb-sm-0">Bell Glamp One</h6>
+                                        <div className="d-flex gap-2 text-muted small">
                                             <span className='small-para'>1–6 Persons</span>
                                             <span className='small-para'>25m²</span>
                                         </div>
                                     </div>
-                                    <p className="small-para mt-2 ">
-                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat, Maximus Lorem Sit Amet, Ullamcorper Odio. Vivamus Eu Ultrices Lorem, Sed Blandit Magna.
+                                    <p className="small-para mt-2 d-none d-md-block">
+                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat.
                                     </p>
-                                    <Button className="btn  rounded bg-color border-0 w-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
+                                    <Button className="btn rounded bg-color border-0 w-100 w-sm-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
                                         CHECK AVAILABILITY
                                     </Button>
                                 </div>
                             </div>
                         </Col>
 
-                        <Col md={6}>
-                            <div className="border shadow" style={{ borderWidth: "2px" }}>
-                                <img src={vaction2_img} alt="Caravan Soler Tent" className="img-fluid w-100" />
+                        <Col xs={12} sm={6} md={6}>
+                            <div className="border shadow vacation-card" style={{ borderWidth: "2px" }}>
+                                <img src={vaction2_img} alt="Caravan Soler Tent" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
                                 <div className="p-3 text-start">
-                                    <div className="d-flex justify-content-between">
-                                        <h6 className="text-success section-name fw-bold">Caravan Soler Tent</h6>
-                                        <div className="d-flex gap-3 justify-content-between text-muted small">
+                                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
+                                        <h6 className="text-success section-name fw-bold mb-2 mb-sm-0">Caravan Soler Tent</h6>
+                                        <div className="d-flex gap-2 text-muted small">
                                             <span className='small-para'>2–6 Persons</span>
                                             <span className='small-para'>27m</span>
                                         </div>
                                     </div>
-                                    <p className="small small-para mt-2">
-                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat, Maximus Lorem Sit Amet, Ullamcorper Odio. Vivamus Eu Ultrices Lorem, Sed Blandit Magna.
+                                    <p className="small-para mt-2 d-none d-md-block">
+                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat.
                                     </p>
-                                    <Button className="btn  rounded bg-color border-0 w-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
+                                    <Button className="btn rounded bg-color border-0 w-100 w-sm-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
                                         CHECK AVAILABILITY
                                     </Button>
                                 </div>
                             </div>
                         </Col>
-                        <Col md={6}>
-                            <div className="border shadow">
-                                <img src={vaction3_img} alt="Glamping Tent" className="img-fluid w-100" />
+                        <Col xs={12} sm={6} md={6}>
+                            <div className="border shadow vacation-card">
+                                <img src={vaction3_img} alt="Glamping Tent" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
                                 <div className="p-3 text-start">
-                                    <div className="d-flex justify-content-between">
-                                        <h6 className="text-success fw-bold section-name">Glamping Tent</h6>
-                                        <div className="d-flex gap-3 justify-content-between text-muted small">
+                                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
+                                        <h6 className="text-success fw-bold section-name mb-2 mb-sm-0">Glamping Tent</h6>
+                                        <div className="d-flex gap-2 text-muted small">
                                             <span className='small-para'>1–6 Persons</span>
                                             <span className='small-para'>17m²</span>
                                         </div>
                                     </div>
-                                    <p className="small mt-2 small-para">
-                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat, Maximus Lorem Sit Amet, Ullamcorper Odio. Vivamus Eu Ultrices Lorem, Sed Blandit Magna.
+                                    <p className="small-para mt-2 d-none d-md-block">
+                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat.
                                     </p>
-                                    <Button className="btn  rounded bg-color border-0 w-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
+                                    <Button className="btn rounded bg-color border-0 w-100 w-sm-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
                                         CHECK AVAILABILITY
                                     </Button>
                                 </div>
                             </div>
                         </Col>
 
-                        <Col md={6}>
-                            <div className="border shadow" style={{ borderWidth: "2px" }}>
-                                <img src={vaction4_img} alt="Caravan Soler Tent" className="img-fluid w-100" />
+                        <Col xs={12} sm={6} md={6}>
+                            <div className="border shadow vacation-card" style={{ borderWidth: "2px" }}>
+                                <img src={vaction4_img} alt="Small Cabin Wood" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
                                 <div className="p-3 text-start">
-                                    <div className="d-flex justify-content-between">
-                                        <h6 className="text-success fw-bold section-name">Small Cabin Wood</h6>
-                                        <div className="d-flex gap-3 justify-content-between text-muted small">
+                                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
+                                        <h6 className="text-success fw-bold section-name mb-2 mb-sm-0">Small Cabin Wood</h6>
+                                        <div className="d-flex gap-2 text-muted small">
                                             <span className='small-para'>1–6 Persons</span>
                                             <span className='small-para'>25m²</span>
                                         </div>
                                     </div>
-                                    <p className="small-para text-start mt-2">
-                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat, Maximus Lorem Sit Amet, Ullamcorper Odio. Vivamus Eu Ultrices Lorem, Sed Blandit Magna.
+                                    <p className="small-para mt-2 d-none d-md-block">
+                                        Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Maecenas Eu Ipsum Volutpat.
                                     </p>
-                                    <Button className="btn  rounded bg-color border-0 w-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
+                                    <Button className="btn rounded bg-color border-0 w-100 w-sm-auto px-4 py-2 fw-semibold" style={{ fontSize: "12px" }}>
                                         CHECK AVAILABILITY
                                     </Button>
                                 </div>
@@ -429,28 +444,28 @@ const Home = () => {
                         </Button>
                     </div>
 
-                    <Row className="g-4">
-                        <Col md={4}>
+                    <Row className="g-4 news-section">
+                        <Col xs={12} sm={6} md={4}>
                             <div>
-                                <img src={bitmap1_img} className="img-fluid mb-2" alt="Article 1" />
-                                <p className="fw-semibold section-name text-start  mb-1">
+                                <img src={bitmap1_img} className="img-fluid mb-2 w-100" alt="Article 1" style={{height: '180px', objectFit: 'cover', borderRadius: '8px'}} />
+                                <p className="fw-semibold section-name text-start mb-1">
                                     Sed nec lorem scelerisque, viverra ex ut, interdum massa.
                                 </p>
-                                <p className="text-muted  text-start small-para">Read..</p>
+                                <p className="text-muted text-start small-para">Read..</p>
                             </div>
                         </Col>
-                        <Col md={4}>
+                        <Col xs={12} sm={6} md={4}>
                             <div>
-                                <img src={bitmap2_img} className="img-fluid mb-2" alt="Article 2" />
+                                <img src={bitmap2_img} className="img-fluid mb-2 w-100" alt="Article 2" style={{height: '180px', objectFit: 'cover', borderRadius: '8px'}} />
                                 <p className="fw-semibold text-start section-name mb-1">
                                     Morbi ligula massa, posuere in finibus ut, varius ac ligula.
                                 </p>
                                 <p className="text-muted text-start small-para">Read..</p>
                             </div>
                         </Col>
-                        <Col md={4}>
+                        <Col xs={12} sm={6} md={4}>
                             <div>
-                                <img src={bitmap3_img} className="img-fluid mb-2" alt="Article 3" />
+                                <img src={bitmap3_img} className="img-fluid mb-2 w-100" alt="Article 3" style={{height: '180px', objectFit: 'cover', borderRadius: '8px'}} />
                                 <p className="fw-semibold text-start section-name mb-1">
                                     Sed nec lorem scelerisque, viverra ex ut, interdum massa.
                                 </p>
