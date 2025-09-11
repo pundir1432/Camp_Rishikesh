@@ -1,0 +1,373 @@
+/* Mobile Responsive CSS for Camp Rishikesh */
+
+/* Base Mobile Styles */
+@media (max-width: 576px) {
+  /* Prevent horizontal scroll */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Container adjustments */
+  .container, .container-fluid {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  /* Typography responsive */
+  h1, .display-1, .display-2, .display-3, .display-4 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  h2 {
+    font-size: clamp(1.25rem, 4vw, 1.75rem) !important;
+  }
+
+  h3, h4, h5, h6 {
+    font-size: clamp(1rem, 3vw, 1.25rem) !important;
+  }
+
+  p, .small-para {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .lead {
+    font-size: 16px !important;
+  }
+
+  /* Button improvements */
+  .btn {
+    min-height: 44px;
+    font-size: 14px !important;
+    padding: 10px 16px !important;
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+  }
+
+  .btn-lg {
+    min-height: 48px;
+    font-size: 16px !important;
+    padding: 12px 20px !important;
+  }
+
+  /* Card improvements */
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .card-body {
+    padding: 1rem !important;
+  }
+
+  .card-title {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Form improvements */
+  .form-control, .form-select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 12px !important;
+    min-height: 44px;
+  }
+
+  .form-label {
+    font-size: 14px !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Navigation improvements */
+  .navbar-nav .nav-link {
+    padding: 12px 0 !important;
+    font-size: 16px !important;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Modal improvements */
+  .modal-dialog {
+    margin: 0.5rem !important;
+    max-width: calc(100% - 1rem) !important;
+  }
+
+  .modal-content {
+    border-radius: 0.5rem !important;
+  }
+
+  /* Table responsive */
+  .table-responsive {
+    font-size: 14px;
+  }
+
+  /* Spacing adjustments */
+  .py-5 {
+    padding: 2rem 0 !important;
+  }
+
+  .py-4 {
+    padding: 1.5rem 0 !important;
+  }
+
+  .mb-5 {
+    margin-bottom: 2rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 2rem !important;
+  }
+
+  /* Image responsive */
+  .img-fluid {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Carousel improvements */
+  .carousel-item img {
+    height: 250px !important;
+    object-fit: cover !important;
+  }
+
+  .carousel-caption {
+    padding: 1rem !important;
+    bottom: 1rem !important;
+    left: 1rem !important;
+    right: 1rem !important;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 10% !important;
+  }
+
+  .carousel-indicators {
+    display: none !important;
+  }
+
+  /* Alert improvements */
+  .alert {
+    font-size: 14px !important;
+    padding: 0.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Badge improvements */
+  .badge {
+    font-size: 0.75rem !important;
+    padding: 0.35em 0.65em !important;
+  }
+
+  /* List improvements */
+  .list-group-item {
+    padding: 0.75rem !important;
+    font-size: 14px !important;
+  }
+
+  /* Accordion improvements */
+  .accordion-button {
+    font-size: 14px !important;
+    padding: 0.75rem !important;
+  }
+
+  .accordion-body {
+    font-size: 14px !important;
+    padding: 0.75rem !important;
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 577px) and (max-width: 768px) {
+  .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  h1, .display-4 {
+    font-size: 2rem !important;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .btn {
+    font-size: 15px !important;
+  }
+
+  .carousel-item img {
+    height: 300px !important;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .carousel-item img,
+  .bonfire-img {
+    height: 250px !important;
+  }
+
+  .hero-section {
+    padding: 2rem 0 !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn:hover,
+  .card:hover,
+  .nav-link:hover {
+    transform: none !important;
+  }
+
+  /* Larger touch targets */
+  .btn, .nav-link, .form-control, .form-select {
+    min-height: 44px;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .img-fluid {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .footer,
+  .btn,
+  .modal,
+  .carousel-control-prev,
+  .carousel-control-next,
+  .carousel-indicators {
+    display: none !important;
+  }
+
+  .container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  body {
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  .card {
+    border: 1px solid #000 !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .bg-light {
+    background-color: #2d3748 !important;
+    color: #e2e8f0 !important;
+  }
+
+  .text-muted {
+    color: #a0aec0 !important;
+  }
+}
+
+/* Utility classes for responsive design */
+.text-responsive {
+  font-size: clamp(0.875rem, 2.5vw, 1rem) !important;
+}
+
+.heading-responsive {
+  font-size: clamp(1.25rem, 4vw, 2rem) !important;
+}
+
+.display-responsive {
+  font-size: clamp(2rem, 6vw, 3.5rem) !important;
+}
+
+/* Mobile-first grid adjustments */
+@media (max-width: 576px) {
+  .row > * {
+    margin-bottom: 1rem;
+  }
+
+  .row > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .col-xs-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-xs-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-xs-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-xs-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+/* Loading states for mobile */
+.loading-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Mobile-specific animations */
+@keyframes mobileSlideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.mobile-slide-in {
+  animation: mobileSlideIn 0.3s ease-out;
+}
+
+/* Sticky elements for mobile */
+@media (max-width: 768px) {
+  .sticky-mobile {
+    position: sticky;
+    top: 70px;
+    z-index: 100;
+  }
+}

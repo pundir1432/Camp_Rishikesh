@@ -138,3 +138,63 @@ form p span {
   font-size: 12px;
   margin-bottom: 4px;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .auth-card {
+    width: 90vw;
+    max-width: 380px;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .auth-face {
+    padding: 20px;
+  }
+
+  .auth-face-signup {
+    padding: 10px 20px;
+  }
+
+  form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  form button {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .MuiTextField-root {
+    margin: 8px 0 !important;
+  }
+
+  .otp-wrapper {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 10px;
+  }
+
+  .auth-card {
+    width: 95vw;
+    max-width: 350px;
+  }
+
+  .auth-face,
+  .auth-face-signup {
+    padding: 15px;
+  }
+
+  form h2 {
+    font-size: 1.3rem;
+  }
+
+  form p {
+    font-size: 13px;
+  }
+}

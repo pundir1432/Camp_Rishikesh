@@ -1,0 +1,352 @@
+/* Global Responsive Styles */
+
+/* Base responsive typography */
+@media (max-width: 576px) {
+  .display-1 { font-size: 2.5rem !important; }
+  .display-2 { font-size: 2rem !important; }
+  .display-3 { font-size: 1.75rem !important; }
+  .display-4 { font-size: 1.5rem !important; }
+  .lead { font-size: 1rem !important; }
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+  h4 { font-size: 1.1rem !important; }
+  h5 { font-size: 1rem !important; }
+}
+
+/* Container padding adjustments */
+@media (max-width: 768px) {
+  .container, .container-fluid {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  section {
+    padding: 2rem 0 !important;
+  }
+  
+  .py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
+/* Card responsive adjustments */
+@media (max-width: 576px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  .card-body {
+    padding: 1rem !important;
+  }
+  
+  .card-title {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Button responsive styles */
+@media (max-width: 576px) {
+  .btn-lg {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+  }
+  
+  .btn {
+    font-size: 0.875rem !important;
+  }
+  
+  .rounded-pill {
+    border-radius: 1.5rem !important;
+  }
+}
+
+/* Form responsive styles */
+@media (max-width: 576px) {
+  .form-control, .form-select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 0.5rem !important;
+  }
+  
+  .form-label {
+    font-size: 0.875rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+}
+
+/* Gallery responsive styles */
+@media (max-width: 576px) {
+  .gallery-item {
+    height: 200px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-item {
+    height: 220px !important;
+  }
+}
+
+/* Modal responsive styles */
+@media (max-width: 576px) {
+  .modal-dialog {
+    margin: 0.5rem !important;
+  }
+  
+  .modal-content {
+    border-radius: 0.5rem !important;
+  }
+}
+
+/* Navigation responsive improvements */
+@media (max-width: 991px) {
+  .navbar-nav {
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .navbar-nav .nav-link:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Hero section responsive */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 0 !important;
+  }
+  
+  .hero-section h1 {
+    font-size: 2rem !important;
+  }
+  
+  .hero-section .lead {
+    font-size: 1rem !important;
+  }
+}
+
+/* Carousel responsive improvements */
+@media (max-width: 576px) {
+  .carousel-item img {
+    height: 250px !important;
+    object-fit: cover;
+  }
+  
+  .carousel-caption {
+    padding: 1rem !important;
+    bottom: 1rem !important;
+  }
+  
+  .carousel-caption h5 {
+    font-size: 1rem !important;
+  }
+  
+  .carousel-caption p {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Booking form responsive */
+@media (max-width: 768px) {
+  .booking-form-section {
+    margin-top: 1rem !important;
+    padding: 0 1rem;
+  }
+  
+  .booking-form-section .container {
+    padding: 1rem !important;
+  }
+}
+
+/* Icon grid responsive */
+@media (max-width: 576px) {
+  .icon-grid .col-6 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .icon-grid svg {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+/* Contact form responsive */
+@media (max-width: 576px) {
+  .contact-form .row > .col-md-6 {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Events filter responsive */
+@media (max-width: 576px) {
+  .filter-buttons {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .filter-buttons .btn {
+    width: 100% !important;
+  }
+}
+
+/* Accordion responsive */
+@media (max-width: 576px) {
+  .accordion-button {
+    font-size: 0.9rem !important;
+    padding: 0.75rem !important;
+  }
+  
+  .accordion-body {
+    font-size: 0.875rem !important;
+    padding: 0.75rem !important;
+  }
+}
+
+/* Table responsive */
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+}
+
+/* Badge responsive */
+@media (max-width: 576px) {
+  .badge {
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+}
+
+/* Alert responsive */
+@media (max-width: 576px) {
+  .alert {
+    font-size: 0.875rem !important;
+    padding: 0.75rem !important;
+  }
+}
+
+/* Spacing utilities for mobile */
+@media (max-width: 576px) {
+  .mb-5 { margin-bottom: 2rem !important; }
+  .mt-5 { margin-top: 2rem !important; }
+  .py-5 { padding: 2rem 0 !important; }
+  .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+}
+
+/* Image responsive improvements */
+@media (max-width: 576px) {
+  .img-fluid {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  .card-img-top {
+    height: 180px !important;
+    object-fit: cover !important;
+  }
+}
+
+/* Footer responsive */
+@media (max-width: 768px) {
+  .footer {
+    text-align: center !important;
+  }
+  
+  .footer .row > div {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Utility classes for responsive design */
+.text-responsive {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.heading-responsive {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+}
+
+.display-responsive {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+}
+
+/* Hover effects for touch devices */
+@media (hover: none) {
+  .card:hover {
+    transform: none !important;
+  }
+  
+  .btn:hover {
+    transform: none !important;
+  }
+}
+
+/* Additional mobile improvements */
+@media (max-width: 576px) {
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Better touch targets */
+  .btn, .nav-link, .card {
+    min-height: 44px;
+  }
+  
+  /* Improved spacing for mobile */
+  .container-fluid {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  
+  /* Better text readability */
+  p, .small-para {
+    line-height: 1.5 !important;
+  }
+  
+  /* Mobile-friendly carousel */
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 8% !important;
+  }
+  
+  .carousel-indicators {
+    display: none !important;
+  }
+  
+  /* Better modal on mobile */
+  .modal-fullscreen-sm-down {
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Landscape mobile adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .bonfire-img {
+    height: 300px !important;
+  }
+  
+  .carousel-item img {
+    height: 300px !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar, .footer, .btn, .modal {
+    display: none !important;
+  }
+  
+  .container {
+    max-width: none !important;
+  }
+}
