@@ -12,7 +12,7 @@ import { FaCampground, FaCaravan, FaFire, FaHiking, FaHome, FaMountain, FaUmbrel
 import Alert from '@mui/material/Alert';
 import { getUserFromSession } from '../helper/api/apiCore';
 import { useDispatch, useSelector } from 'react-redux';
-import { createBookingAction } from '../redux/booking/actions';
+// import { createBookingAction } from '../redux/booking/actions';
 
 const Home = () => {
 
@@ -39,7 +39,8 @@ const Home = () => {
                 Accommodation:accommodation,
                 // userId:user?.id
             }
-            dispatch(createBookingAction(payload))
+            // dispatch(createBookingAction(payload))
+            console.log('Booking payload:', payload)
         }
     };
     useEffect(() => {

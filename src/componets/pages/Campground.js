@@ -2,11 +2,18 @@ import React, { useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { FaWifi, FaParking, FaShower, FaFire, FaUtensils, FaSwimmingPool } from 'react-icons/fa';
 import { tent_img, van_img, cabin_img, vaction1_img, vaction2_img, vaction3_img, vaction4_img } from '../assets/images';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGround } from '../redux/ground/thunk';
+import { PageLoading } from '../helper/loading/Loaders';
 
 const Campground = () => {
+  const dispatch = useDispatch();
+  const { ground, loading } = useSelector(state => state.ground || {});
+console.log({ground});
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(getGround());
+  }, [dispatch]);
 
   const accommodations = [
     {
@@ -81,29 +88,38 @@ const Campground = () => {
           </Row>
           
           <Row className="g-4">
-            {accommodations.map((item) => (
-              <Col xs={12} sm={6} md={6} lg={3} key={item.id}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Img variant="top" src={item.image} style={{ height: window.innerWidth < 576 ? '180px' : '200px', objectFit: 'cover' }} />
-                  <Card.Body className="d-flex flex-column p-3">
-                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start mb-2">
-                      <Card.Title className="h6 h-sm-5 text-success mb-1 mb-sm-0">{item.name}</Card.Title>
-                      <span className="fw-bold text-primary">{item.price}</span>
-                    </div>
-                    <div className="d-flex justify-content-between text-muted small mb-3">
-                      <span>{item.capacity}</span>
-                      <span>{item.size}</span>
-                    </div>
-                    <div className="mb-3 flex-grow-1">
-                      {item.amenities.map((amenity, index) => (
-                        <span key={index} className="badge bg-light text-dark me-1 mb-1" style={{fontSize: '10px'}}>{amenity}</span>
-                      ))}
-                    </div>
-                    <Button variant="success" size="sm" className="mt-auto w-100">Book Now</Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+            {loading ? (
+              <div className="text-center w-100"><PageLoading/></div>
+            ) : ground?.data?.length > 0 ? (
+              ground?.data?.map((item) => (
+                <Col xs={12} sm={6} md={6} lg={3} key={item._id}>
+                  <Card className="h-100 shadow-sm border-0">
+                    <Card.Img variant="top" src={item.imageUrl} style={{ height: window.innerWidth < 576 ? '180px' : '200px', objectFit: 'cover' }} />
+                    <Card.Body className="d-flex flex-column p-3">
+                      <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start mb-2">
+                        <Card.Title className="h6 h-sm-5 text-success mb-1 mb-sm-0">{item.name}</Card.Title>
+                        <span className="fw-bold text-primary">{item.price}</span>
+                      </div>
+                      <div className="d-flex justify-content-between text-muted small mb-3">
+                        <span>{item.person}</span>
+                        <span>{item.size}</span>
+                      </div>
+                      <div className="mb-3 flex-grow-1">
+                        {item.facilities?.map((amenity, index) => (
+                          <span key={index} className="badge bg-light text-dark me-1 mb-1" style={{fontSize: '10px'}}>{amenity}</span>
+                        ))}
+                      </div>
+                      <Button variant="success" size="sm" className="mt-auto w-100">Book Now</Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))
+            ) : (
+              <div className="text-center w-100">
+                <h4 className="text-muted">No accommodations available</h4>
+                <p className="text-muted">Check back later for accommodation options</p>
+              </div>
+            )}
           </Row>
         </Container>
       </section>

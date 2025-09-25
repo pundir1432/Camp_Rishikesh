@@ -10,9 +10,8 @@ import ForgotPassword from './ForgotPassword';
 import '../styles/Auth.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginUser, signupUser, verifyOTP } from '../redux/actions';
-import { AuthActionTypes } from '../redux/auth/constants';
-import { ButtonLoading } from '../helper/loading/Loading';
+import { ButtonLoading } from '../helper/loading/Loaders';
+import { loginOwner, userSignUp, verifyOtp } from '../redux/auth/thunk';
 
 const SignIn = () => {
     const [mode, setMode] = useState('signin');
@@ -26,7 +25,7 @@ const SignIn = () => {
 
     const { loading, userLoggedIn, verifyEmailData, userLogout, sentOTP, user, error } = useSelector((state) => ({
         loading: state.Auth.loading,
-        user: state.Auth.user?.data,
+        user: state.Auth.user,
         error: state.Auth.error,
         userLoggedIn: state.Auth.userLoggedIn,
         sentOTP: state.Auth.sentOTP,
@@ -46,14 +45,14 @@ const SignIn = () => {
             email: capitalizeName(data.email),
             password: data.password,
         };
-        dispatch(loginUser(payload));
+        dispatch(loginOwner(payload));
     };
 
     useEffect(() => {
         if (user?.status === 200) {
             navigate('/camp/home')
         }
-    }, [user?.status === 200])
+    }, [user, navigate])
 
     const handleSignUp = (data) => {
         setSignupEmail(data.email);
@@ -63,7 +62,7 @@ const SignIn = () => {
             phone: data?.phone,
             name: capitalizeName(data?.name)
         };
-        dispatch(signupUser(payload));
+        dispatch(userSignUp(payload));
     };
 
     const handleVerifyOTP = (data) => {
@@ -71,7 +70,7 @@ const SignIn = () => {
             email: capitalizeName(signupEmail),
             otp: data.otp,
         };
-        dispatch(verifyOTP(payload));
+        dispatch(verifyOtp(payload));
 
     };
 
@@ -93,17 +92,7 @@ const SignIn = () => {
     }, [error, sentOTP]);
 
 
-    useEffect(() => {
-        if (mode === 'signup') {
-            dispatch({
-                type: AuthActionTypes.AUTH_API_RESPONSE_SUCCESS,
-                payload: {
-                    actionType: AuthActionTypes.SIGNUP_USER,
-                    data: {},
-                },
-            });
-        }
-    }, [mode]);
+
 
     useEffect(() => {
         if (verifyEmailData?.status === 200) {

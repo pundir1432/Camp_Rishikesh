@@ -61,7 +61,7 @@ const Navbar = () => {
     return isLargeScreen()
       ? scrolled
         ? 'text-dark'
-        : 'text-dark'
+        : 'text-white'
       : 'text-dark';
   };
 
@@ -83,24 +83,18 @@ const Navbar = () => {
 
   }
 
-  const handleProtectedNav = (route) => {
-    if (!user?.id) {
-      navigate('/account/login');
-    } else {
-      navigate(`/${route}`);
-    }
-  };
-
   return (
-    <nav className={`navbar navbar-expand-lg fixed-top custom-navbar ${scrolled ? 'navbar-scrolle' : ''}`} style={{background:"transparent"}}>
-      <div className="container pt-0 " style={{background:"transparent"}}>
-        <div className={`navbar-content rounded-pill px-4 py-2  ${scrolled ? 'navbar-scrolled' : ''}`} style={{
-          backdropFilter: 'blur(10px)',
+    <nav className={`navbar navbar-expand-lg fixed-top custom-navbar `}>
+      <div className="container-fluid px-lg-5">
+        <div className={`navbar-content d-flex w-100 align-items-center px-lg-4 py-2 rounded-pill`} style={{
+          backdropFilter: scrolled ? 'blur(10px)' : 'none',
           transition: 'all 0.3s ease',
-          background:"transparent"
+          background:  '#fff' ,
+          maxWidth: '1200px',
+          margin: '0 auto'
         }}>
               <a className={`navbar-brand ${getNavTextClass()}`} href="#">
-                <img src={logo} alt="logo" className="img-fluid nav-logo" />
+                <img src={logo} alt="logo" className="nav-logo" style={{objectFit: 'contain'}} />
               </a>
 
               <button
@@ -114,15 +108,15 @@ const Navbar = () => {
               </button>
 
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav me-auto ps-lg-5 mb-2 mb-lg-0">
+                <ul className="navbar-nav text-dark me-auto ps-lg-5 mb-2 mb-lg-0">
                   {["Home", "Campground", "Events", "Near me", "Gallery", "About", "Contact us"].map((item, i) => {
                     const route = item.toLowerCase().replace(/\s+/g, '');
                     const isProtected = ["events", "nearme", "gallery"].includes(route);
 
                     return (
-                      <li className="nav-item" key={i}>
+                      <li className="nav-item text-dark" key={i}>
                         <a
-                          className={`nav-link nav-link-name active ${getNavTextClass()}`}
+                          className={`nav-link text-dark nav-link-name active ${getNavTextClass()}`}
                           href={`#${route}`}
                           onClick={(e) => {
                             e.preventDefault();
@@ -248,7 +242,7 @@ const Navbar = () => {
                       <button className={`btn rounded-pill nav-btn ${scrolled && isLargeScreen() ? 'btn-outline-dark me-2' : 'text-white'}`}>
                         Sign up
                       </button>
-                      <button onClick={handleLogin} className={`btn rounded-pill nav-btn ${scrolled && isLargeScreen() ? 'btn-success text-white' : 'text-white'}`}>
+                      <button  onClick={handleLogin} className={`btn rounded-pill nav-btn ${scrolled && isLargeScreen() ? 'btn-success text-white' : 'text-white'}`}>
                         Sign in
                       </button>
                     </form>
@@ -256,7 +250,7 @@ const Navbar = () => {
                       <button className={`btn rounded-pill nav-btn btn-outline-dark`}>
                         Sign up
                       </button>
-                      <button onClick={handleLogin} className={`btn rounded-pill nav-btn text-white border-0 btn-success`}>
+                      <button  onClick={handleLogin} className={`btn rounded-pill nav-btn text-white border-0 btn-success`}>
                         Sign in
                       </button>
                     </form>

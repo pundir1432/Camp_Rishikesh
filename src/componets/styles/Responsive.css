@@ -1,65 +1,50 @@
-/* Global Responsive Styles */
+/* Optimized Global Responsive Styles */
 
-/* Base responsive typography */
+/* Typography */
 @media (max-width: 576px) {
-  .display-1 { font-size: 2.5rem !important; }
-  .display-2 { font-size: 2rem !important; }
-  .display-3 { font-size: 1.75rem !important; }
-  .display-4 { font-size: 1.5rem !important; }
-  .lead { font-size: 1rem !important; }
-  h1 { font-size: 1.75rem !important; }
-  h2 { font-size: 1.5rem !important; }
-  h3 { font-size: 1.25rem !important; }
+  .display-4 { font-size: 1.8rem !important; }
+  .lead { font-size: 0.95rem !important; }
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.4rem !important; }
+  h3 { font-size: 1.2rem !important; }
   h4 { font-size: 1.1rem !important; }
   h5 { font-size: 1rem !important; }
+  .small { font-size: 0.8rem !important; }
 }
 
-/* Container padding adjustments */
+/* Optimized spacing */
 @media (max-width: 768px) {
-  .container, .container-fluid {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-  
-  section {
-    padding: 2rem 0 !important;
-  }
-  
-  .py-5 {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
+  .container { padding: 0 15px !important; }
+  section { padding: 2rem 0 !important; }
+  .py-5 { padding: 2rem 0 !important; }
+  .py-4 { padding: 1.5rem 0 !important; }
+  .mb-5 { margin-bottom: 2rem !important; }
+  .mt-5 { margin-top: 2rem !important; }
 }
 
-/* Card responsive adjustments */
 @media (max-width: 576px) {
-  .card {
-    margin-bottom: 1rem;
-  }
-  
-  .card-body {
-    padding: 1rem !important;
-  }
-  
-  .card-title {
-    font-size: 1.1rem !important;
-  }
+  section { padding: 1.5rem 0 !important; }
+  .py-5 { padding: 1.5rem 0 !important; }
+  .py-4 { padding: 1rem 0 !important; }
 }
 
-/* Button responsive styles */
+/* Optimized cards */
 @media (max-width: 576px) {
-  .btn-lg {
-    padding: 0.5rem 1rem !important;
-    font-size: 1rem !important;
-  }
-  
-  .btn {
-    font-size: 0.875rem !important;
-  }
-  
-  .rounded-pill {
-    border-radius: 1.5rem !important;
-  }
+  .card { margin-bottom: 1rem; }
+  .card-body { padding: 0.75rem !important; }
+  .card-title { font-size: 1rem !important; }
+  .card-img-top { height: 150px !important; object-fit: cover; }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .card-img-top { height: 180px !important; }
+}
+
+/* Optimized buttons */
+@media (max-width: 576px) {
+  .btn-lg { padding: 0.5rem 1rem !important; font-size: 0.9rem !important; }
+  .btn { font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important; }
+  .btn-sm { font-size: 0.75rem !important; padding: 0.3rem 0.6rem !important; }
 }
 
 /* Form responsive styles */
