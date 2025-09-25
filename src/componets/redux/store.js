@@ -1,15 +1,16 @@
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import rootReducer from './reducers';
-import rootSaga from './sagas';
+import { configureStore } from "@reduxjs/toolkit";
+import userAuthReducer from "./auth/slice";
+import gallaryReducer from "./gallary/slice";
+import locationReducre from "./location/slice";
+import groundReducre from "./ground/slice";
 
-const sagaMiddleware = createSagaMiddleware();
-
-const store = createStore(
-    rootReducer,
-    applyMiddleware(sagaMiddleware)
-);
-
-sagaMiddleware.run(rootSaga);
+const store = configureStore({
+  reducer: {
+    Auth: userAuthReducer,
+    gallary: gallaryReducer,
+    location: locationReducre,
+    ground: groundReducre
+  },
+});
 
 export default store;

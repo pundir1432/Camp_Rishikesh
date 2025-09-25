@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from "react";
 import { useRoutes, Navigate } from "react-router-dom";
-import DefaultLayout from "../helper/Default";
+// import DefaultLayout from "../helper/Default";
 import PrivateRoute from "./PrivateRoute";
 import { Loading } from "../helper/loading/Loading";
 
@@ -19,9 +19,8 @@ const Gallery = React.lazy(() => import("../pages/Gallery"));
 const Contact = React.lazy(() => import("../pages/Contact"));
 const NotFound = React.lazy(() => import("./Not Found/ErrorBoundary"));
 
-const loading = <div className="loading-spinner w-100 d-flex justify-content-center aling-items-center"><Loading /></div>;
+const loading = <div className="loading-spinner w-100 d-flex justify-content-center align-items-center"><Loading /></div>;
 const AllRoutes = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const LoadComponent = ({ component: Component }) => (
     <Suspense fallback={loading}>
       <Component />
@@ -43,15 +42,8 @@ const AllRoutes = () => {
         { path: "*", element: <LoadComponent component={NotFound} /> },
       ],
     },
-    {
-      path: "account",
-      element: <DefaultLayout />,
-      children: [
-        { path: "login", element: <LoginPage show={!isLoggedIn}  setIsLoggedIn={setIsLoggedIn} /> },
-        // { path: "forget-password", element: <ForgotPassword /> },
-        // { path: "verify-code", element: <VerifyCode /> },
-      ],
-    },
+    { path: "login", element: <LoadComponent component={LoginPage} /> },
+    { path: "account/login", element: <LoadComponent component={LoginPage} /> },
   ]);
 };
 

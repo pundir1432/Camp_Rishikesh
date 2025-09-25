@@ -1,175 +1,165 @@
+// apiCore.js
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import config from "../../../config";
 
-// Base URL for all requests
-axios.defaults.baseURL = config.API_URL;
+const USER_SESSION_KEY = "camp_booking";
 
-// Global Response Interceptor
-axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    let message;
-    const status = error?.response?.status;
+// -------------------
+// SESSION MANAGEMENT
+// -------------------
 
-    if (status) {
-      switch (status) {
-        case 400:
-          message = error.response.data || "Bad Request";
-          break;
-        case 401:
-          message = error.response.data.message || "Invalid credentials";
-          break;
-        case 403:
-          message = error.response.data.message || "Access Forbidden";
-          break;
-        case 404:
-          message =
-            error.response.data.message ||
-            "Sorry! The data you are looking for could not be found";
-          break;
-        default:
-          message = error.response?.data || error.message || "An error occurred";
-      }
-    } else {
-      message = "Network error or server not responding.";
-    }
-
-    return Promise.reject(message);
-  }
-);
-
-const AUTH_SESSION_KEY = "camp_booking";
-
-// Set token in Axios default headers
-const setAuthorization = (token) => {
-  if (token) axios.defaults.headers.common["Authorization"] = token;
-  else delete axios.defaults.headers.common["Authorization"];
-};
-
-// Get user session from localStorage
-const getUserFromSession = () => {
-  const raw = localStorage.getItem(AUTH_SESSION_KEY);
-  console.log(raw,'rawraw');
+export const getUserFromSession = () => {
+  const stored = localStorage.getItem(USER_SESSION_KEY);
+  if (!stored) return null;
   try {
-    return raw ? JSON.parse(raw) : raw;
-  } catch (e) {
-    console.error("Invalid user data in session:", e);
+    return JSON.parse(stored);
+  } catch {
     return null;
   }
 };
 
-class APICore {
-  // Generic GET with query
-  get = (url, params) => {
-    const queryString = params
-      ? "?" +
-        Object.entries(params)
-          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-          .join("&")
-      : "";
-    return axios.get(`${url}${queryString}`);
-  };
+export const setLoggedInUser = (session) => {
+  if (session) {
+    localStorage.setItem(USER_SESSION_KEY, JSON.stringify(session));
+  } else {
+    localStorage.removeItem(USER_SESSION_KEY);
+  }
+};
 
-  // Download File (Blob)
-  getFile = (url, params) => {
-    const queryString = params
-      ? "?" +
-        Object.entries(params)
-          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-          .join("&")
-      : "";
-    return axios.get(`${url}${queryString}`, { responseType: "blob" });
-  };
-
-  // Multiple GET requests
-  getMultiple = (urls, params) => {
-    const queryString = params
-      ? "?" +
-        Object.entries(params)
-          .map(([k, v]) => `${k}=${v}`)
-          .join("&")
-      : "";
-    return axios.all(urls.map((url) => axios.get(`${url}${queryString}`)));
-  };
-
-  // POST
-  create = (url, data) => axios.post(url, data);
-
-  // PUT
-  update = (url, data) => axios.put(url, data);
-
-  // PATCH
-  updatePatch = (url, data) => axios.patch(url, data);
-
-  // DELETE
-  delete = (url) => axios.delete(url);
-
-  // POST with file upload
-  createWithFile = (url, data) => {
-    const formData = new FormData();
-    Object.entries(data).forEach(([k, v]) => formData.append(k, v));
-    return axios.post(url, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-  };
-
-  // PATCH with file
-  updateWithFile = (url, data) => {
-    const formData = new FormData();
-    Object.entries(data).forEach(([k, v]) => formData.append(k, v));
-    return axios.patch(url, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-  };
-
-  // Check user auth
-  isUserAuthenticated = () => {
-    const user = this.getLoggedInUser();
-    if (!user?.token) return false;
-
-    try {
-      const decoded = jwtDecode(user.token);
-      const currentTime = Date.now() / 1000;
-      if (decoded.exp < currentTime) {
-        localStorage.removeItem(AUTH_SESSION_KEY);
-        localStorage.clear();
-        window.location.href = "/camp/home";
-        return false;
-      }
-      return true;
-    } catch (err) {
+// -------------------
+// TOKEN VALIDATION
+// -------------------
+const validateToken = (token, userType) => {
+  if (!token) return false;
+  try {
+    const decoded = jwtDecode(token);
+    const now = Date.now() / 1000;
+    if (decoded.exp < now) {
+      handleExpiredSession(userType);
       return false;
     }
-  };
+    return true;
+  } catch {
+    return false;
+  }
+};
 
-  setLoggedInUser = (session) => {
-    console.log(session,'session');
-    if (session) {
-      localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
-      setAuthorization(session.token);
-    } else {
-      localStorage.removeItem(AUTH_SESSION_KEY);
-      setAuthorization(null);
+
+export const isUserAuthenticated = () => {
+  const owner = getUserFromSession();
+  return validateToken(owner?.token, "owner");
+};
+
+export const isAuthenticated = () =>
+  isUserAuthenticated();
+
+// -------------------
+// AXIOS INSTANCES
+// -------------------
+const userAxios = axios.create({ baseURL: config.API_URL });
+
+let sessionHandled = false;
+
+const handleExpiredSession = (userType) => {
+  if (sessionHandled) return;
+  sessionHandled = true;
+  setLoggedInUser(null);
+
+  alert("Your session has expired. Please log in again.");
+
+  if (window.location.pathname.toLowerCase().startsWith("/admin")) {
+    window.location.href = "/admin/login";
+  } else {
+    window.location.href = "/";
+  }
+};
+
+
+const errorInterceptor = (err) => {
+  if (!navigator.onLine) {
+    window.location.href = "/no-internet";
+    return Promise.reject("No internet connection");
+  }
+
+  const { response } = err;
+  const status = response?.status;
+
+  if (status === 401) {
+    const path = window.location.pathname.toLowerCase();
+    if (path.startsWith("/admin")) {
+      handleExpiredSession("owner");
     }
-  };
+    return Promise.reject("Session expired. Please log in again.");
+  }
 
-  getLoggedInUser = () => getUserFromSession();
+  const message =
+    response?.data?.message ||
+    {
+      400: "Error",
+      403: "Access Forbidden",
+      404: "Sorry! the data you are looking for could not be found",
+    }[status] ||
+    err.message;
 
-  setUserInSession = (modifiedUser) => {
-    const raw = localStorage.getItem(AUTH_SESSION_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      const updated = { token: parsed.token, ...parsed.user, ...modifiedUser };
-      this.setLoggedInUser(updated);
+  return Promise.reject(message);
+};
+
+// Attach interceptors
+userAxios.interceptors.response.use((res) => res, errorInterceptor);
+
+userAxios.interceptors.request.use((config) => {
+  const token = getUserFromSession()?.token;
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+// -------------------
+// ROLE-BASED HELPERS
+// -------------------
+const buildFormData = (data) => {
+  const formData = new FormData();
+  for (const key in data) {
+    if (data[key] !== undefined) {
+      formData.append(key, data[key]);
     }
-  };
-}
+  }
+  return formData;
+};
 
-// Set token if available on page load
-const sessionUser = getUserFromSession();
-if (sessionUser?.token) {
-  setAuthorization(sessionUser.token);
-}
 
-export { APICore, setAuthorization, getUserFromSession };
+export const ownerApi = {
+  get: (url, params = {}) => userAxios.get(url, { params }),
+  post: (url, data) => userAxios.post(url, data),
+  put: (url, data) => userAxios.put(url, data),
+  patch: (url, data) => userAxios.patch(url, data),
+  delete: (url, params = {}) => userAxios.delete(url, { params }),
+  postFile: (url, data) =>
+    userAxios.post(url, buildFormData(data), {
+      headers: { "Content-Type": "multipart/form-data" },
+    }),
+  patchFile: (url, data) =>
+    userAxios.patch(url, buildFormData(data), {
+      headers: { "Content-Type": "multipart/form-data" },
+    }),
+};
+
+export const updateSessionData = (updatedData, type = "user") => {
+  if (!updatedData || typeof updatedData !== "object") return;
+
+  if (type === "owner") {
+    const owner = getUserFromSession();
+    if (owner) {
+      const updatedOwner = { ...owner, ...updatedData };
+      setLoggedInUser(updatedOwner);
+    }
+  }
+};
+
+// -------------------
+// INIT AUTH ON LOAD
+// -------------------
+const initializeAuth = () => {
+  const owner = getUserFromSession();
+};
+initializeAuth();

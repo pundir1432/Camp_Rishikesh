@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaClock, FaPhone, FaGlobe, FaStar } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLocation } from '../redux/location/thunk';
+import { PageLoading } from '../helper/loading/Loaders';
 
 const NearMe = () => {
+  const dispatch = useDispatch();
+  const { location, loading } = useSelector(state => state.location || {});
+console.log({location});
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(getLocation());
+  }, [dispatch]);
 
   const attractions = [
     {
@@ -149,7 +156,7 @@ const NearMe = () => {
   };
 
   return (
-    <div className="pt-5 mt-4">
+    <div className="pt-5 mt-3">
       {/* Hero Section */}
       <section className="py-5" style={{ background: 'linear-gradient(135deg, #345E40 0%, #4a7c59 100%)' }}>
         <Container>
@@ -173,66 +180,65 @@ const NearMe = () => {
           </Row>
           
           <Row className="g-4">
-            {attractions.map((attraction) => (
-              <Col xs={12} sm={6} md={6} lg={4} key={attraction.id}>
-                <Card className="h-100 shadow-sm border-0">
-                  <div 
-                    className="card-img-top d-flex align-items-center justify-content-center text-white"
-                    style={{
-                      height: window.innerWidth < 576 ? '150px' : '200px',
-                      background: `linear-gradient(45deg, #345E40, #4a7c59)`,
-                      fontSize: window.innerWidth < 576 ? '2rem' : '3rem'
-                    }}
-                  >
-                    <FaMapMarkerAlt />
-                  </div>
-                  <Card.Body className="d-flex flex-column">
-                    <div className="d-flex justify-content-between align-items-start mb-2">
-                      <span className={`badge bg-${getCategoryColor(attraction.category)} mb-2`}>
-                        {attraction.category}
-                      </span>
-                      <div className="d-flex align-items-center text-warning">
-                        <FaStar className="me-1" size={14} />
-                        <small>{attraction.rating}</small>
+            {loading ? (
+              <div className="text-center w-100"><PageLoading/></div>
+            ) : location?.data?.length > 0 ? (
+              location?.data?.map((locationItem) => (
+                <Col xs={12} sm={6} lg={4} key={locationItem._id}>
+                  <Card className="h-100 shadow-sm border-0">
+                    <img 
+                      src={locationItem?.imageUrl}
+                      alt={locationItem?.title}
+                      className="card-img-top img-fluid"
+                      style={{ height: '180px', objectFit: 'cover' }}
+                    />
+                    <Card.Body className="d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-start mb-2">
+                        <span className={`badge bg-${getCategoryColor(locationItem?.type)} mb-2`}>
+                          {locationItem?.type}
+                        </span>
                       </div>
-                    </div>
-                    
-                    <Card.Title className="h5 mb-2">{attraction.name}</Card.Title>
-                    
-                    <div className="mb-3 text-muted small">
-                      <div className="d-flex align-items-center mb-1">
-                        <FaMapMarkerAlt className="me-2" />
-                        {attraction.distance} away
-                      </div>
-                      <div className="d-flex align-items-center mb-1">
-                        <FaClock className="me-2" />
-                        {attraction.duration}
-                      </div>
-                      {attraction.phone !== "N/A" && (
+                      
+                      <Card.Title className="h5 mb-2">{locationItem?.title}</Card.Title>
+                      
+                      <div className="mb-3 text-muted small">
                         <div className="d-flex align-items-center mb-1">
-                          <FaPhone className="me-2" />
-                          {attraction.phone}
+                          <FaMapMarkerAlt className="me-2" />
+                          {locationItem?.distance} away
                         </div>
-                      )}
-                      {attraction.website !== "N/A" && (
-                        <div className="d-flex align-items-center">
-                          <FaGlobe className="me-2" />
-                          <a href={`https://${attraction.website}`} className="text-decoration-none small">
-                            {attraction.website}
-                          </a>
+                        <div className="d-flex align-items-center mb-1">
+                          <FaClock className="me-2" />
+                          {locationItem?.driveTime}
                         </div>
-                      )}
-                    </div>
-                    
-                    <p className="text-muted small flex-grow-1">{attraction.description}</p>
-                    
-                    <Button variant="outline-success" size="sm" className="mt-auto">
-                      Get Directions
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+                        <div className="d-flex align-items-center mb-1">
+                          <FaMapMarkerAlt className="me-2" />
+                          {locationItem?.city}, {locationItem?.state}
+                        </div>
+                        {locationItem?.link && (
+                          <div className="d-flex align-items-center">
+                            <FaGlobe className="me-2" />
+                            <a href={locationItem?.link} target="_blank" rel="noopener noreferrer" className="text-decoration-none small">
+                              Visit Website
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <p className="text-muted small flex-grow-1">{locationItem?.description}</p>
+                      
+                      <Button variant="outline-success" size="sm" className="mt-auto">
+                        Get Directions
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))
+            ) : (
+              <div className="text-center w-100">
+                <h4 className="text-muted">No locations available</h4>
+                <p className="text-muted">Check back later for nearby attractions</p>
+              </div>
+            )}
           </Row>
         </Container>
       </section>
@@ -249,7 +255,7 @@ const NearMe = () => {
           
           <Row className="g-4">
             {restaurants.map((restaurant) => (
-              <Col xs={12} sm={6} md={6} lg={4} key={restaurant.id}>
+              <Col xs={12} sm={6} lg={4} key={restaurant.id}>
                 <Card className="shadow-sm border-0">
                   <Card.Body className="p-3">
                     <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start mb-2">
