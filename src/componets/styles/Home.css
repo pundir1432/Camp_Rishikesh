@@ -13,23 +13,29 @@
     background-size: cover;
 }
 
-.bonfire-img {
-    background-image: url('../assets/Mask\ group\ \(3\).png');
-    background-size: cover;
-    background-position: center;
-    height: 90vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-}
-
 .small-para {
     font-size: 14px;
     font-weight: 400;
     font-family: "Inter" sans-serif;
+}
+
+/* Image hover effects for all images except navbar and home banner */
+.vacation-card,
+.news-section .card,
+.gallery-item,
+.campground-card {
+    overflow: hidden;
+}
+
+img:not(.navbar img):not(.carousel-item img) {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+img:not(.navbar img):not(.carousel-item img):hover {
+    transform: scale(1.04);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    filter: brightness(50%);
 }
 
 .main-heading {
@@ -60,11 +66,62 @@
 .section-name {
     font-size: 15px !important;
     font-family: "Inter" sans-serif;
+    font-weight: 500;
 }
 
 .booking-form-section {
     margin-top: -60px;
     z-index: 2;
+}
+
+/* Icon Carousel Animation */
+.icon-carousel-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.icon-carousel {
+    display: flex;
+    animation: scrollLeft 10s linear infinite;
+}
+
+.icon-item {
+    flex: 0 0 25%;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.icon-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+@keyframes scrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.river-rafting-heading {
+    font-size: 32px;
+    font-weight: 600;
+    text-decoration-color: rgb(230, 8, 8);
+    text-underline-offset: 8px;
+    text-decoration-line: underline;
+    text-shadow: #e75757 1px 1px 2px;
+}
+
+.river-rafting-para {
+    font-size: 16px;
+    font-weight: 400;
+    color: #555;
+    line-height: 1.6;
 }
 
 /* Mobile Responsive Styles */

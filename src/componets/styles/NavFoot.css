@@ -28,11 +28,19 @@
   padding: 8px 12px !important;
   border-radius: 20px;
   transition: all 0.3s ease;
-  color: black !important;
+  color: #333 !important;
+  position: relative;
 }
 
 .nav-link-name:hover {
- box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link-name.active-link {
+  color: #2d5235 !important;
+  font-weight: 600;
+  border-bottom: 2px solid #2d5235;
+  border-radius: 0;
 }
 
 .nav-btn {
@@ -84,6 +92,7 @@
   }
   
   .nav-link-name {
+    color: #333 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0;
     margin-bottom: 5px;

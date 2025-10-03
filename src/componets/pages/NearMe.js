@@ -1,117 +1,77 @@
-import React, { useEffect } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { FaMapMarkerAlt, FaClock, FaPhone, FaGlobe, FaStar } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Card, Button, Form, Badge } from 'react-bootstrap';
+import { FaMapMarkerAlt, FaClock, FaPhone, FaGlobe, FaStar, FaFilter, FaLocationArrow } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLocation } from '../redux/location/thunk';
-import { PageLoading } from '../helper/loading/Loaders';
+import { DataLoading } from '../helper/loading/Loaders';
 
 const NearMe = () => {
   const dispatch = useDispatch();
   const { location, loading } = useSelector(state => state.location || {});
+  const [userLocation, setUserLocation] = useState(null);
+  const [filter, setFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('distance');
+  const [locationDistances, setLocationDistances] = useState({});
 console.log({location});
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getLocation());
+    getCurrentLocation();
   }, [dispatch]);
 
-  const attractions = [
-    {
-      id: 1,
-      name: "Rishikesh River Rafting",
-      category: "Adventure",
-      distance: "2.5 km",
-      duration: "15 min drive",
-      rating: 4.8,
-      description: "Experience thrilling white water rafting on the Ganges River with professional guides.",
-      phone: "+91 98765 43210",
-      website: "www.rishikeshrafting.com",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 2,
-      name: "Laxman Jhula",
-      category: "Landmark",
-      distance: "3.2 km",
-      duration: "20 min drive",
-      rating: 4.6,
-      description: "Famous suspension bridge over the Ganges, perfect for photography and spiritual walks.",
-      phone: "N/A",
-      website: "N/A",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 3,
-      name: "Beatles Ashram",
-      category: "Cultural",
-      distance: "4.1 km",
-      duration: "25 min drive",
-      rating: 4.5,
-      description: "Historic ashram where The Beatles stayed in 1968, now a meditation and art center.",
-      phone: "+91 98765 43211",
-      website: "www.beatlesashram.org",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 4,
-      name: "Triveni Ghat",
-      category: "Spiritual",
-      distance: "3.8 km",
-      duration: "22 min drive",
-      rating: 4.7,
-      description: "Sacred bathing ghat where three rivers meet, famous for evening Ganga Aarti ceremony.",
-      phone: "N/A",
-      website: "N/A",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 5,
-      name: "Neer Garh Waterfall",
-      category: "Nature",
-      distance: "8.5 km",
-      duration: "45 min drive + 20 min trek",
-      rating: 4.4,
-      description: "Beautiful waterfall perfect for swimming and picnics, surrounded by lush greenery.",
-      phone: "N/A",
-      website: "N/A",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 6,
-      name: "Parmarth Niketan Ashram",
-      category: "Spiritual",
-      distance: "3.5 km",
-      duration: "18 min drive",
-      rating: 4.9,
-      description: "Largest ashram in Rishikesh offering yoga classes, meditation, and spiritual programs.",
-      phone: "+91 98765 43212",
-      website: "www.parmarth.org",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 7,
-      name: "Rajaji National Park",
-      category: "Wildlife",
-      distance: "15 km",
-      duration: "1 hour drive",
-      rating: 4.3,
-      description: "Wildlife sanctuary home to elephants, tigers, leopards, and diverse bird species.",
-      phone: "+91 98765 43213",
-      website: "www.rajajipark.gov.in",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 8,
-      name: "Kunjapuri Temple",
-      category: "Spiritual",
-      distance: "12 km",
-      duration: "50 min drive",
-      rating: 4.6,
-      description: "Hilltop temple offering panoramic views of the Himalayas and sunrise/sunset views.",
-      phone: "N/A",
-      website: "N/A",
-      image: "/api/placeholder/300/200"
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+        },
+        (error) => {
+          console.log('Location access denied');
+        }
+      );
     }
-  ];
+  };
+
+  // Calculate real distance from user location
+  const calculateRealDistance = async (userLat, userLng, locationId) => {
+    try {
+      const response = await fetch('/api/location/user-distance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userLat, userLng, locationId })
+      });
+      return response.json();
+    } catch (error) {
+      console.error('Distance calculation error:', error);
+      return null;
+    }
+  };
+
+  // Calculate distances for all locations when user location is available
+  useEffect(() => {
+    if (userLocation && location?.data?.length > 0) {
+      location.data.forEach(async (locationItem) => {
+        const distanceData = await calculateRealDistance(
+          userLocation.lat, 
+          userLocation.lng, 
+          locationItem._id
+        );
+        if (distanceData) {
+          setLocationDistances(prev => ({
+            ...prev,
+            [locationItem._id]: distanceData.distance
+          }));
+        }
+      });
+    }
+  }, [userLocation, location?.data]);
+
+  const filteredLocations = location?.data?.filter(item => 
+    filter === 'all' || item.type === filter
+  ) || [];
 
   const restaurants = [
     {
@@ -156,11 +116,11 @@ console.log({location});
   };
 
   return (
-    <div className="pt-5 mt-3">
+    <div className="">
       {/* Hero Section */}
       <section className="py-5" style={{ background: 'linear-gradient(135deg, #345E40 0%, #4a7c59 100%)' }}>
         <Container>
-          <Row className="text-center text-white">
+          <Row className="text-center mt-4 text-white">
             <Col>
               <h1 className="display-4 fw-bold mb-3">Explore Near Me</h1>
               <p className="lead">Discover amazing attractions, restaurants, and activities around our campground</p>
@@ -170,20 +130,63 @@ console.log({location});
       </section>
 
       {/* Attractions Section */}
-      <section className="py-5">
+      <section className="py-4">
         <Container>
           <Row className="mb-4">
             <Col>
               <h2 className="fw-bold text-center mb-3">Top Attractions</h2>
               <p className="text-center text-muted">Must-visit places within easy reach of our campground</p>
+              
+              {/* Filters */}
+              <Row className="justify-content-center mb-4">
+                <Col md={8}>
+                  <div className="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+                    <Button 
+                      variant="outline-success" 
+                      size="sm"
+                      onClick={getCurrentLocation}
+                      className="d-flex align-items-center"
+                    >
+                      <FaLocationArrow className="me-2" />
+                      {userLocation ? 'Location Detected' : 'Get My Location'}
+                    </Button>
+                    
+                    <Form.Select 
+                      size="sm" 
+                      style={{ width: 'auto' }}
+                      value={filter}
+                      onChange={(e) => setFilter(e.target.value)}
+                    >
+                      <option value="all">All Categories</option>
+                      <option value="Adventure">Adventure</option>
+                      <option value="Landmark">Landmark</option>
+                      <option value="Cultural">Cultural</option>
+                      <option value="Spiritual">Spiritual</option>
+                      <option value="Nature">Nature</option>
+                      <option value="Wildlife">Wildlife</option>
+                    </Form.Select>
+                    
+                    <Form.Select 
+                      size="sm" 
+                      style={{ width: 'auto' }}
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                    >
+                      <option value="distance">Sort by Distance</option>
+                      <option value="name">Sort by Name</option>
+                      <option value="type">Sort by Type</option>
+                    </Form.Select>
+                  </div>
+                </Col>
+              </Row>
             </Col>
           </Row>
           
           <Row className="g-4">
             {loading ? (
-              <div className="text-center w-100"><PageLoading/></div>
-            ) : location?.data?.length > 0 ? (
-              location?.data?.map((locationItem) => (
+              <div className="text-center w-100"><DataLoading/></div>
+            ) : filteredLocations?.length > 0 ? (
+              filteredLocations?.map((locationItem) => (
                 <Col xs={12} sm={6} lg={4} key={locationItem._id}>
                   <Card className="h-100 shadow-sm border-0">
                     <img 
@@ -199,12 +202,15 @@ console.log({location});
                         </span>
                       </div>
                       
-                      <Card.Title className="h5 mb-2">{locationItem?.title}</Card.Title>
+                      <Card.Title className="h5 mb-2">{locationItem?.title?.charAt(0).toUpperCase() + locationItem?.title?.slice(1)}</Card.Title>
                       
                       <div className="mb-3 text-muted small">
                         <div className="d-flex align-items-center mb-1">
                           <FaMapMarkerAlt className="me-2" />
-                          {locationItem?.distance} away
+                          {userLocation && locationDistances[locationItem._id] 
+                            ? `${locationDistances[locationItem._id]} km away`
+                            : `${locationItem?.driveTime} mins drive`
+                          }
                         </div>
                         <div className="d-flex align-items-center mb-1">
                           <FaClock className="me-2" />
@@ -226,9 +232,21 @@ console.log({location});
                       
                       <p className="text-muted small flex-grow-1">{locationItem?.description}</p>
                       
-                      <Button variant="outline-success" size="sm" className="mt-auto">
-                        Get Directions
-                      </Button>
+                      <div className="d-flex gap-2 mt-auto">
+                        <Button 
+                          variant="outline-success" 
+                          size="sm" 
+                          className="flex-fill"
+                          onClick={() => window.open(`https://maps.google.com/maps?q=${locationItem?.title}+${locationItem?.city}`, '_blank')}
+                        >
+                          Get Directions
+                        </Button>
+                        {userLocation && locationDistances[locationItem._id] && (
+                          <Badge bg="info" className="d-flex align-items-center">
+                            {locationDistances[locationItem._id]} km
+                          </Badge>
+                        )}
+                      </div>
                     </Card.Body>
                   </Card>
                 </Col>

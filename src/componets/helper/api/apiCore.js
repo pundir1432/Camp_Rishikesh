@@ -78,7 +78,7 @@ const handleExpiredSession = (userType) => {
 
 const errorInterceptor = (err) => {
   if (!navigator.onLine) {
-    window.location.href = "/no-internet";
+    window.location.href = "/camp/no-internet";
     return Promise.reject("No internet connection");
   }
 

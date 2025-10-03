@@ -7,7 +7,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { MdOutlineDateRange } from "react-icons/md";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoHome } from "react-icons/io5";
-import {  WarningAmber } from '@mui/icons-material';
+import { WarningAmber } from '@mui/icons-material';
 import { FaCampground, FaCaravan, FaFire, FaHiking, FaHome, FaMountain, FaUmbrellaBeach, FaWater } from 'react-icons/fa';
 import Alert from '@mui/material/Alert';
 import { getUserFromSession } from '../helper/api/apiCore';
@@ -23,9 +23,9 @@ const Home = () => {
     const [showAlert, setShowAlert] = useState(false);
     const user = getUserFromSession()
     const dispatch = useDispatch()
-    const store = useSelector((state)=>state)
+    const store = useSelector((state) => state)
     const createBooking = store?.createBookingReducer?.data
-    console.log(createBooking,'createBooking');
+    console.log(createBooking, 'createBooking');
 
     const handleBooking = () => {
         if (!checkIn || !checkOut || !guests || !accommodation) {
@@ -33,10 +33,10 @@ const Home = () => {
             setTimeout(() => setShowAlert(false), 3000);
         } else {
             const payload = {
-                checkIn:checkIn,
-                checkOut:checkOut,
-                people:guests,
-                Accommodation:accommodation,
+                checkIn: checkIn,
+                checkOut: checkOut,
+                people: guests,
+                Accommodation: accommodation,
                 // userId:user?.id
             }
             // dispatch(createBookingAction(payload))
@@ -120,7 +120,7 @@ const Home = () => {
                         <Col xs={6} md={3}>
                             <Form.Group className='text-start' controlId="checkIn">
                                 <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
-                                    <MdOutlineDateRange size={15} className='me-1 fw-bold text-color' /> 
+                                    <MdOutlineDateRange size={15} className='me-1 fw-bold text-color' />
                                     <span className='d-none d-md-inline'>CHECK IN</span>
                                     <span className='d-md-none'>IN</span>
                                 </Form.Label>
@@ -137,7 +137,7 @@ const Home = () => {
                         <Col xs={6} md={3}>
                             <Form.Group className='text-start' controlId="checkOut">
                                 <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
-                                    <MdOutlineDateRange size={15} className='me-1 text-color fw-bold' /> 
+                                    <MdOutlineDateRange size={15} className='me-1 text-color fw-bold' />
                                     <span className='d-none d-md-inline'>CHECK OUT</span>
                                     <span className='d-md-none'>OUT</span>
                                 </Form.Label>
@@ -154,7 +154,7 @@ const Home = () => {
                         <Col xs={6} md={2}>
                             <Form.Group className='text-start' controlId="guests">
                                 <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
-                                    <IoMdPersonAdd size={15} className='me-1 fw-bold text-color' /> 
+                                    <IoMdPersonAdd size={15} className='me-1 fw-bold text-color' />
                                     <span>GUESTS</span>
                                 </Form.Label>
                                 <Form.Select
@@ -175,7 +175,7 @@ const Home = () => {
                         <Col xs={6} md={2}>
                             <Form.Group className='text-start' controlId="accommodation">
                                 <Form.Label className='small-para text-color fw-bold d-flex align-items-center'>
-                                    <IoHome size={15} className='me-1 text-color fw-bold' /> 
+                                    <IoHome size={15} className='me-1 text-color fw-bold' />
                                     <span className='d-none d-md-inline'>ACCOMMODATION</span>
                                     <span className='d-md-none'>TYPE</span>
                                 </Form.Label>
@@ -218,25 +218,44 @@ const Home = () => {
                         Tortor Venenatis. Sed Vitae Dolor Interdum, Semper Leo At, Tristique Nisi. Maecenas Vitae Luctus Tortor.
                     </p>
 
-                    {/* Icon Row */}
-                    <Row className="text-center my-5 gy-4">
-                        <Col xs={6} md={3}>
-                            <FaHome size={40} className="text-success mb-2" />
-                            <div className='section-name'>25 CARAVAN SITES</div>
-                        </Col>
-                        <Col xs={6} md={3}>
-                            <FaCampground size={40} className="text-success mb-2" />
-                            <div className='section-name'>50 TENT SITES</div>
-                        </Col>
-                        <Col xs={6} md={3}>
-                            <FaUmbrellaBeach size={40} className="text-success mb-2" />
-                            <div className='section-name'>10 GLAMP SITES</div>
-                        </Col>
-                        <Col xs={6} md={3}>
-                            <FaMountain size={40} className="text-success mb-2" />
-                            <div className='section-name'>10 CABIN HOUSES</div>
-                        </Col>
-                    </Row>
+                    {/* Icon Carousel */}
+                    <div className="icon-carousel-container my-5">
+                        <div className="icon-carousel">
+                            <div className="icon-item">
+                                <FaHome size={40} className="text-success mb-2" />
+                                <div className='section-name'>25 CARAVAN SITES</div>
+                            </div>
+                            <div className="icon-item">
+                                <FaCampground size={40} className="text-success mb-2" />
+                                <div className='section-name'>50 TENT SITES</div>
+                            </div>
+                            <div className="icon-item">
+                                <FaUmbrellaBeach size={40} className="text-success mb-2" />
+                                <div className='section-name'>10 GLAMP SITES</div>
+                            </div>
+                            <div className="icon-item">
+                                <FaMountain size={40} className="text-success mb-2" />
+                                <div className='section-name'>10 CABIN HOUSES</div>
+                            </div>
+                            {/* Duplicate for seamless loop */}
+                            <div className="icon-item">
+                                <FaHome size={40} className="text-success mb-2" />
+                                <div className='section-name'>25 CARAVAN SITES</div>
+                            </div>
+                            <div className="icon-item">
+                                <FaCampground size={40} className="text-success mb-2" />
+                                <div className='section-name'>50 TENT SITES</div>
+                            </div>
+                            <div className="icon-item">
+                                <FaUmbrellaBeach size={40} className="text-success mb-2" />
+                                <div className='section-name'>10 GLAMP SITES</div>
+                            </div>
+                            <div className="icon-item">
+                                <FaMountain size={40} className="text-success mb-2" />
+                                <div className='section-name'>10 CABIN HOUSES</div>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* Image Cards */}
                     <Row className="text-start gy-4">
@@ -262,7 +281,57 @@ const Home = () => {
                             </p>
                         </Col>
                     </Row>
+                    <hr />
+                    <Row>
+                        <Col lg={12}>
+                            <div className="headings">
+                                <h3 className='river-rafting-heading'>RIVER RAFTING IN RISHIKESH PRICE</h3>
+                                <p className='river-rafting-para'>If you have always been fond of adventure sports and now want to experience a new adventure, then you should keep the plan of River Rafting in Rishikesh price in your wish list. Rishikesh is the most adventurous tourist from India.
+                                </p>
+                            </div>
+                            <div className="icon-carousel-container my-5">
+                                <div className="icon-carousel">
+                                    <div className="icon-item">
+                                        <img src="https://thumbs.dreamstime.com/b/white-water-rafting-19149447.jpg" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Rafting</div>
+                                    </div>
+                                    <div className="icon-item">
+                                        <img src="https://static.vecteezy.com/system/resources/previews/000/155/972/non_2x/bungee-jumping-vector.jpg" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Bungee</div>
+                                    </div>
+                                    <div className="icon-item">
+                                        <img src="https://thumbs.dreamstime.com/b/cartoon-character-skydiving-colorful-parachute-displaying-sections-red-yellow-green-blue-wears-jumpsuit-372062027.jpg" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Paragliding</div>
+                                    </div>
+                                    <div className="icon-item">
+                                        <img src="https://img.freepik.com/free-vector/camping-site-with-trailer-tent-burning-bonfire_107791-15732.jpg?semt=ais_hybrid&w=740&q=80" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Camping</div>
+                                    </div>
+                                    {/* Duplicate for seamless loop */}
+                                    <div className="icon-item">
+                                        <img src="https://thumbs.dreamstime.com/b/white-water-rafting-19149447.jpg" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Rafting</div>
+                                    </div>
+                                    <div className="icon-item">
+                                        <img src="https://static.vecteezy.com/system/resources/previews/000/155/972/non_2x/bungee-jumping-vector.jpg" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Bungee</div>
+                                    </div>
+                                    <div className="icon-item">
+                                        <img src="https://thumbs.dreamstime.com/b/cartoon-character-skydiving-colorful-parachute-displaying-sections-red-yellow-green-blue-wears-jumpsuit-372062027.jpg" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Paragliding</div>
+                                    </div>
+                                    <div className="icon-item">
+                                        <img src="https://img.freepik.com/free-vector/camping-site-with-trailer-tent-burning-bonfire_107791-15732.jpg?semt=ais_hybrid&w=740&q=80" className='img-fluid rounded-circle' alt="" />
+                                        <div className='section-name'>Camping</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+
+                    </Row>
                 </Container>
+
+
             </div>
             <div className='mb-4' style={{ backgroundColor: '#f9f8f4' }}>
                 <Container>
@@ -322,15 +391,30 @@ const Home = () => {
                     </Row>
                 </Container>
             </div>
-            <section
-                className='bonfire-img'>
+            <section className='bonfire-video' style={{ position: 'relative', height: '500px', overflow: 'hidden' }}>
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                    }}
+                >
+                    <source src={require('../assets/bonfire video.mp4')} type="video/mp4" />
+                </video>
+
                 <div className="overlay" style={{
                     position: 'absolute',
                     inset: 0,
                     background: 'rgba(0,0,0,0.4)'
                 }}></div>
 
-                <div style={{ position: 'relative', zIndex: 2 }}>
+                <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: 'white' }}>
                     <h2 className="fw-bold main-heading mb-4">
                         A Bonfire Is Basically Just A <br />
                         Nightclub In The Mountains
@@ -349,7 +433,7 @@ const Home = () => {
                     <Row className="g-4">
                         <Col xs={12} sm={6} md={6}>
                             <div className="border shadow vacation-card">
-                                <img src={vaction1_img} alt="Bell Glamp One" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
+                                <img src={vaction1_img} alt="Bell Glamp One" className="img-fluid w-100" style={{ height: '200px', objectFit: 'cover' }} />
                                 <div className="p-3 text-start">
                                     <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
                                         <h6 className="text-success section-name fw-bold mb-2 mb-sm-0">Bell Glamp One</h6>
@@ -370,7 +454,7 @@ const Home = () => {
 
                         <Col xs={12} sm={6} md={6}>
                             <div className="border shadow vacation-card" style={{ borderWidth: "2px" }}>
-                                <img src={vaction2_img} alt="Caravan Soler Tent" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
+                                <img src={vaction2_img} alt="Caravan Soler Tent" className="img-fluid w-100" style={{ height: '200px', objectFit: 'cover' }} />
                                 <div className="p-3 text-start">
                                     <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
                                         <h6 className="text-success section-name fw-bold mb-2 mb-sm-0">Caravan Soler Tent</h6>
@@ -390,7 +474,7 @@ const Home = () => {
                         </Col>
                         <Col xs={12} sm={6} md={6}>
                             <div className="border shadow vacation-card">
-                                <img src={vaction3_img} alt="Glamping Tent" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
+                                <img src={vaction3_img} alt="Glamping Tent" className="img-fluid w-100" style={{ height: '200px', objectFit: 'cover' }} />
                                 <div className="p-3 text-start">
                                     <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
                                         <h6 className="text-success fw-bold section-name mb-2 mb-sm-0">Glamping Tent</h6>
@@ -411,7 +495,7 @@ const Home = () => {
 
                         <Col xs={12} sm={6} md={6}>
                             <div className="border shadow vacation-card" style={{ borderWidth: "2px" }}>
-                                <img src={vaction4_img} alt="Small Cabin Wood" className="img-fluid w-100" style={{height: '200px', objectFit: 'cover'}} />
+                                <img src={vaction4_img} alt="Small Cabin Wood" className="img-fluid w-100" style={{ height: '200px', objectFit: 'cover' }} />
                                 <div className="p-3 text-start">
                                     <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start">
                                         <h6 className="text-success fw-bold section-name mb-2 mb-sm-0">Small Cabin Wood</h6>
@@ -448,7 +532,7 @@ const Home = () => {
                     <Row className="g-4 news-section">
                         <Col xs={12} sm={6} md={4}>
                             <div>
-                                <img src={bitmap1_img} className="img-fluid mb-2 w-100" alt="Article 1" style={{height: '180px', objectFit: 'cover', borderRadius: '8px'}} />
+                                <img src={bitmap1_img} className="img-fluid mb-2 w-100" alt="Article 1" style={{ height: '180px', objectFit: 'cover', borderRadius: '8px' }} />
                                 <p className="fw-semibold section-name text-start mb-1">
                                     Sed nec lorem scelerisque, viverra ex ut, interdum massa.
                                 </p>
@@ -457,7 +541,7 @@ const Home = () => {
                         </Col>
                         <Col xs={12} sm={6} md={4}>
                             <div>
-                                <img src={bitmap2_img} className="img-fluid mb-2 w-100" alt="Article 2" style={{height: '180px', objectFit: 'cover', borderRadius: '8px'}} />
+                                <img src={bitmap2_img} className="img-fluid mb-2 w-100" alt="Article 2" style={{ height: '180px', objectFit: 'cover', borderRadius: '8px' }} />
                                 <p className="fw-semibold text-start section-name mb-1">
                                     Morbi ligula massa, posuere in finibus ut, varius ac ligula.
                                 </p>
@@ -466,7 +550,7 @@ const Home = () => {
                         </Col>
                         <Col xs={12} sm={6} md={4}>
                             <div>
-                                <img src={bitmap3_img} className="img-fluid mb-2 w-100" alt="Article 3" style={{height: '180px', objectFit: 'cover', borderRadius: '8px'}} />
+                                <img src={bitmap3_img} className="img-fluid mb-2 w-100" alt="Article 3" style={{ height: '180px', objectFit: 'cover', borderRadius: '8px' }} />
                                 <p className="fw-semibold text-start section-name mb-1">
                                     Sed nec lorem scelerisque, viverra ex ut, interdum massa.
                                 </p>

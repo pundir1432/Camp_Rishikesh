@@ -1,12 +1,33 @@
-import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import { RingLoader, PulseLoader, PuffLoader } from "react-spinners";
 
-export const ButtonLoading = () => (
-  <Spinner animation="border" size="sm" />
-);
+export const Loading = ({ color }) => {
+  return (
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      <RingLoader color={color} size={80} />
+    </div>
+  );
+};
 
-export const PageLoading = () => (
-  <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
-    <Spinner animation="border" />
-  </div>
-);
+export const ButtonLoading = ({ color = "white", size=10,height  }) => {
+  return (
+    <div className="d-flex justify-content-center align-items-center w-100 py-1"
+    style={{height:height}}
+    >
+      <PulseLoader color={color} size={size} />
+    </div>
+  );
+};
+
+export const DataLoading = ({ color, height }) => {
+  return (
+    <div
+      className="d-flex justify-content-center align-items-center w-100"
+      style={{ height: height }}
+    >
+      <PuffLoader color={color} size={70} />
+    </div>
+  );
+};
