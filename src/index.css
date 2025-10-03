@@ -23,7 +23,7 @@ body {
   html {
     font-size: 14px;
   }
-  
+
   body {
     font-size: 14px;
   }
@@ -35,9 +35,11 @@ code {
 }
 
 /* set up color */
-.text-color{
+.text-color {
   color: #345E40 !important;
 }
-.bg-color{
+
+.bg-color {
   background-color: #345E40 !important;
 }
+

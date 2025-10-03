@@ -4,7 +4,7 @@ import { FaExpand, FaTimes } from 'react-icons/fa';
 import { banner_img, tent_img, van_img, cabin_img, vaction1_img, vaction2_img, vaction3_img, vaction4_img, bitmap1_img, bitmap2_img, bitmap3_img } from '../assets/images';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGallary } from '../redux/gallary/thunk';
-import { PageLoading } from '../helper/loading/Loaders';
+import { DataLoading } from '../helper/loading/Loaders';
 
 const Gallery = () => {
   const [showModal, setShowModal] = useState(false);
@@ -42,11 +42,11 @@ const Gallery = () => {
   };
 
   return (
-    <div className="pt-5 mt-4">
+    <div className="">
       {/* Hero Section */}
       <section className="py-5" style={{ background: 'linear-gradient(135deg, #345E40 0%, #4a7c59 100%)' }}>
         <Container>
-          <Row className="text-center text-white">
+          <Row className="text-center mt-4 text-white">
             <Col>
               <h1 className="display-4 fw-bold mb-3">Photo Gallery</h1>
               <p className="lead">Discover the beauty of our campground through these stunning images</p>
@@ -82,7 +82,7 @@ const Gallery = () => {
         <Container>
           <Row className="g-3">
             {loading ? (
-              <div className="text-center w-100"><PageLoading/></div>
+              <div className="text-center w-100"><DataLoading/></div>
             ) : gallary?.data?.length > 0 ? (
               gallary?.data?.map((image, index) => (
                 <Col xs={6} sm={4} md={4} lg={3} key={image._id}>
@@ -136,11 +136,11 @@ const Gallery = () => {
         </Modal.Header>
         <Modal.Body className="p-0">
           {selectedImage && (
-            <div>
+            <div className='d-flex justify-content-center flex-column  align-items-center'>
               <img
                 src={selectedImage?.imageUrl}
                 alt={selectedImage.title}
-                className="w-100"
+                className="w-75 "
                 style={{ maxHeight: '70vh', objectFit: 'contain' }}
               />
               <div className="p-4">

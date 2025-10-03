@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ErrorBoundary from './componets/routes/Not Found/ErrorBoundary';
 import Routes from './componets/routes/Routes';
+import WhatsAppWidget from './componets/common/WhatsAppWidget';
 import './componets/styles/MobileResponsive.css';
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
     <div className="home-bg-img">
       <ErrorBoundary>
             <Routes />
+            <WhatsAppWidget />
       </ErrorBoundary>
     </div>
   );

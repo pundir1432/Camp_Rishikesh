@@ -29,10 +29,10 @@ const NetworkHandler = ({ children }) => {
   useEffect(() => {
     if (!isOnline) {
       // ✅ Save last route BEFORE navigating to no-internet
-      if (location.pathname !== "/no-internet") {
+      if (location.pathname !== "/camp/no-internet") {
         localStorage.setItem("lastOnlineRoute", location.pathname);
       }
-      navigate("/no-internet", { replace: true });
+      navigate("/camp/no-internet", { replace: true });
     }
   }, [isOnline, navigate, location]);
 

@@ -1,0 +1,172 @@
+/* Vehicle Page Styles */
+.vehicle-page {
+  padding-top: 80px;
+}
+
+/* Banner Section */
+.vehicle-banner {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 80px 0;
+}
+
+.banner-content h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.banner-image img {
+  width: 400px;
+  height: 300px;
+}
+
+/* Section Titles */
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 50px;
+  color: #2c3e50;
+}
+
+/* Bike Section */
+.bike-section {
+  background-color: #f8f9fa;
+  padding: 80px 0;
+}
+
+/* Car Section */
+.car-section {
+  background-color: #ffffff;
+  padding: 80px 0;
+}
+
+.product-name{
+  font-size: 20px;
+  font-weight: 500;
+}
+.product-para{
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.product-price{
+  font-size: 16px;
+  font-weight: 500;
+}
+.main-heading{
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Vehicle Cards */
+.vehicle-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.vehicle-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.vehicle-card h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.vehicle-card p {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 15px;
+}
+
+.vehicle-card .btn {
+  width: 100%;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .banner-content h1 {
+    font-size: 2rem;
+  }
+
+  .banner-content p {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .vehicle-banner {
+    padding: 40px 0;
+  }
+
+  .bike-section,
+  .car-section {
+    padding: 40px 0;
+  }
+}
+
+.vehicle-carousel-container {
+  position: relative;
+}
+
+.carousel-controls {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.custom-carousel-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 50%;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.prev-btn {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.prev-btn:hover {
+  background-color: #0056b3;
+}
+
+.next-btn {
+  background-color: #28a745;
+  color: #ffffff;
+  box-shadow: none !important;
+}
+
+.next-btn:hover {
+  background-color: #218838;
+}

@@ -144,7 +144,7 @@ const Contact = () => {
                             onChange={handleInputChange}
                             required
                             placeholder="Your full name"
-                            style={{fontSize: '16px'}}
+                            style={{ fontSize: '16px' }}
                           />
                         </Form.Group>
                       </Col>
@@ -158,7 +158,7 @@ const Contact = () => {
                             onChange={handleInputChange}
                             required
                             placeholder="your@email.com"
-                            style={{fontSize: '16px'}}
+                            style={{ fontSize: '16px' }}
                           />
                         </Form.Group>
                       </Col>
@@ -171,7 +171,7 @@ const Contact = () => {
                             value={formData.phone}
                             onChange={handleInputChange}
                             placeholder="+91 98765 43210"
-                            style={{fontSize: '16px'}}
+                            style={{ fontSize: '16px' }}
                           />
                         </Form.Group>
                       </Col>
@@ -183,7 +183,7 @@ const Contact = () => {
                             value={formData.subject}
                             onChange={handleInputChange}
                             required
-                            style={{fontSize: '16px'}}
+                            style={{ fontSize: '16px' }}
                           >
                             <option value="">Select a subject</option>
                             <option value="booking">Booking Inquiry</option>
@@ -205,7 +205,7 @@ const Contact = () => {
                             onChange={handleInputChange}
                             required
                             placeholder="Tell us how we can help you..."
-                            style={{fontSize: '16px', resize: 'vertical'}}
+                            style={{ fontSize: '16px', resize: 'vertical' }}
                           />
                         </Form.Group>
                       </Col>
@@ -224,7 +224,7 @@ const Contact = () => {
             <Col lg={6}>
               <Card className="border-0 shadow-sm h-100">
                 <Card.Body className="p-0">
-                  <div 
+                  <div
                     className="bg-light d-flex align-items-center justify-content-center h-100 rounded"
                     style={{ minHeight: '400px' }}
                   >
@@ -249,7 +249,7 @@ const Contact = () => {
       <section className="py-5">
         <Container>
           <Row>
-            <Col lg={8} className="mx-auto">
+            <Col lg={6} className="mx-auto">
               <h2 className="fw-bold text-center mb-5">Frequently Asked Questions</h2>
               <div className="accordion" id="faqAccordion">
                 {faqs.map((faq, index) => (
@@ -278,35 +278,32 @@ const Contact = () => {
                 ))}
               </div>
             </Col>
-          </Row>
-        </Container>
-      </section>
-
-      {/* Social Media & CTA */}
-      <section className="py-5" style={{ backgroundColor: '#f8f9fa' }}>
-        <Container>
-          <Row>
-            <Col className="text-center">
-              <h3 className="fw-bold mb-3">Follow Us</h3>
-              <p className="text-muted mb-4">Stay connected for updates, photos, and special offers</p>
-              <div className="d-flex justify-content-center gap-3 mb-4">
-                <a href="#" className="btn btn-outline-primary rounded-circle p-3">
-                  <FaFacebook size={20} />
-                </a>
-                <a href="#" className="btn btn-outline-danger rounded-circle p-3">
-                  <FaInstagram size={20} />
-                </a>
-                <a href="#" className="btn btn-outline-info rounded-circle p-3">
-                  <FaTwitter size={20} />
-                </a>
-              </div>
-              <Button variant="success" size="lg" className="rounded-pill px-4">
-                Book Your Stay Now
-              </Button>
+            <Col lg={6} className="mx-auto text-center mt-4">
+              <Row>
+                <Col className="text-center">
+                  <h3 className="fw-bold mb-3">Follow Us</h3>
+                  <p className="text-muted mb-4">Stay connected for updates, photos, and special offers</p>
+                  <div className="d-flex justify-content-center gap-3 mb-4">
+                    <a href="#" className="btn btn-outline-primary rounded-circle p-3">
+                      <FaFacebook size={20} />
+                    </a>
+                    <a href="#" className="btn btn-outline-danger rounded-circle p-3">
+                      <FaInstagram size={20} />
+                    </a>
+                    <a href="#" className="btn btn-outline-info rounded-circle p-3">
+                      <FaTwitter size={20} />
+                    </a>
+                  </div>
+                  <Button variant="success" size="lg" className="rounded-pill px-4">
+                    Book Your Stay Now
+                  </Button>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Container>
       </section>
+
     </div>
   );
 };

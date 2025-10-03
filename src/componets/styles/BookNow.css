@@ -1,0 +1,68 @@
+/* BookNow Page Styles */
+.book-now-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.form-control-modern {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.form-control-modern:focus {
+  border-color: #345E40;
+  box-shadow: 0 0 0 0.2rem rgba(52, 94, 64, 0.25);
+  background: #fff;
+}
+
+.booking-summary {
+  font-size: 0.95rem;
+}
+
+.booking-summary .badge {
+  font-size: 0.75rem;
+}
+
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-header {
+  border-bottom: none;
+  padding: 1rem 1.5rem;
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+@media (max-width: 991px) {
+  .sticky-top {
+    position: static !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .book-now-page {
+    padding-top: 1rem;
+  }
+  
+  .card-body {
+    padding: 1rem !important;
+  }
+  
+  .btn-lg {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+}

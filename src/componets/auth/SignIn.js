@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import ForgotPassword from './ForgotPassword';
-import '../styles/Auth.css';
+import { FaEye, FaEyeSlash, FaFacebook } from 'react-icons/fa';
+import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { ButtonLoading } from '../helper/loading/Loaders';
 import { loginOwner, userSignUp, verifyOtp } from '../redux/auth/thunk';
+import '../styles/Auth.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const [mode, setMode] = useState('signin');
@@ -19,26 +15,23 @@ const SignIn = () => {
     const [signupEmail, setSignupEmail] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [alertMessage, setAlertMessage] = useState('');
     const [alertVariant, setAlertVariant] = useState('danger');
 
-    const { loading, userLoggedIn, verifyEmailData, userLogout, sentOTP, user, error } = useSelector((state) => ({
+    const { loading, sentOTP, user, error, verifyEmailData } = useSelector((state) => ({
         loading: state.Auth.loading,
         user: state.Auth.user,
         error: state.Auth.error,
-        userLoggedIn: state.Auth.userLoggedIn,
         sentOTP: state.Auth.sentOTP,
         verifyEmailData: state.Auth?.verifyEmailData
-
     }));
-    console.log(user, 'user00');
 
     const signinForm = useForm();
     const signupForm = useForm();
     const otpForm = useForm();
-    const capitalizeName = (value) => value.charAt(0).toUpperCase() + value.slice(1);
 
+    const capitalizeName = (value) => value.charAt(0).toUpperCase() + value.slice(1);
 
     const handleSignIn = (data) => {
         const payload = {
@@ -50,9 +43,9 @@ const SignIn = () => {
 
     useEffect(() => {
         if (user?.status === 200) {
-            navigate('/camp/home')
+            navigate('/camp/home');
         }
-    }, [user, navigate])
+    }, [user, navigate]);
 
     const handleSignUp = (data) => {
         setSignupEmail(data.email);
@@ -71,28 +64,21 @@ const SignIn = () => {
             otp: data.otp,
         };
         dispatch(verifyOtp(payload));
-
     };
 
     useEffect(() => {
         const message = error?.msg || error?.message || sentOTP?.message;
-
         if (message) {
             setAlertMessage(message);
             setAlertVariant(error ? 'danger' : 'success');
             setShowAlert(true);
-
             const timer = setTimeout(() => {
                 setShowAlert(false);
                 setAlertMessage('');
             }, 3000);
-
             return () => clearTimeout(timer);
         }
     }, [error, sentOTP]);
-
-
-
 
     useEffect(() => {
         if (verifyEmailData?.status === 200) {
@@ -104,222 +90,248 @@ const SignIn = () => {
     }, [verifyEmailData]);
 
     return (
-        <Container fluid>
-            <Row>
-                <Col className="p-0 m-0">
-                    <div className="auth-container">
-                        <div className={`auth-card ${mode === 'signup' ? 'flipped' : ''} ${mode === 'forgot' ? 'forgot-mode' : ''}`}>
+        <div className="auth-page p-0">
+            <Container fluid className="h-100">
+                <Row className="h-100 g-0">
+                    {/* Left Side - Image/Branding */}
+                    <Col lg={6} className="auth-left d-none d-lg-flex justify-content-center align-items-center text-start">
+                        <div className="auth-brand">
+                            <div className="brand-content ">
+                                <h1>Welcome to Camp Rishikesh</h1>
+                                <p>Experience nature at its finest with premium camping facilities</p>
+                                <div className="brand-features">
+                                    <div className="feature">✓ Luxury Tents & Cabins</div>
+                                    <div className="feature">✓ Adventure Activities</div>
+                                    <div className="feature">✓ Scenic Mountain Views</div>
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
 
-                            {/* Sign In */}
-                            <div className="auth-face front">
-                                {showAlert && alertMessage && mode === 'signin' && (
-                                    <Alert variant={alertVariant} className="text-center">
-                                        {alertMessage}
-                                    </Alert>
-                                )}
-                                <h2>Sign In</h2>
-                                <form onSubmit={signinForm.handleSubmit(handleSignIn)}>
-                                    <TextField
-                                        className="w-100"
-                                        label="Email"
-                                        size="small"
-                                        variant="outlined"
-                                        {...signinForm.register('email', { required: 'Email is required' })}
-                                    />
-                                    {signinForm.formState.errors.email && (
-                                        <p className="error text-start">{signinForm.formState.errors.email.message}</p>
-                                    )}
+                    {/* Right Side - Auth Forms */}
+                    <Col lg={6} className="auth-right">
+                        <div className="auth-container">
+                            {showAlert && alertMessage && (
+                                <Alert variant={alertVariant} className="auth-alert">
+                                    {alertMessage}
+                                </Alert>
+                            )}
 
-                                    <TextField
-                                        className="w-100 mt-3"
-                                        label="Password"
-                                        size="small"
-                                        type={showPassword ? 'text' : 'password'}
-                                        variant="outlined"
-                                        {...signinForm.register('password', { required: 'Password is required' })}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                    {signinForm.formState.errors.password && (
-                                        <p className="error text-start">{signinForm.formState.errors.password.message}</p>
-                                    )}
-
-                                    <div className="text-end">
-                                        <span
-                                            style={{ cursor: "pointer", color: "#007bff" }}
-                                            onClick={() => setMode('forgot')}
-                                        >
-                                            Forgot Password?
-                                        </span>
+                            {mode === 'signin' && (
+                                <div className="auth-form">
+                                    <div className="auth-header">
+                                        <h2>Sign In</h2>
+                                        <p>Welcome back! Please sign in to your account</p>
                                     </div>
 
-                                    <button type="submit">{loading ? <ButtonLoading /> : "Login"}</button>
-
-                                    <p>
-                                        <span>You don't have an account? </span>
-                                        <span
-                                            onClick={() => setMode('signup')}
-                                            style={{ color: '#007bff', cursor: 'pointer', textDecoration: 'underline' }}
-                                        >
-                                            Sign Up
-                                        </span>
-                                    </p>
-                                </form>
-                            </div>
-
-                            {/* Sign Up */}
-                            <div className="auth-face-signup back py-3">
-                                <div style={{ minHeight: '20px' }}>
-                                    {showAlert && alertMessage && mode === 'signup' && (
-                                        <Alert variant={alertVariant} className="text-center mb-2">
-                                            {alertMessage}
-                                        </Alert>
-                                    )}
-                                </div>
-
-                                <h2>Sign Up</h2>
-                                <form onSubmit={signupForm.handleSubmit(handleSignUp)}>
-                                    <TextField
-                                        className="w-100"
-                                        label="Name"
-                                        size="small"
-                                        variant="outlined"
-                                        {...signupForm.register('name', {
-                                            required: 'Name is required',
-                                            pattern: {
-                                                value: /^[A-Z][a-zA-Z ]*$/,
-                                                message: 'First letter must be capital and only letters allowed',
-                                            },
-                                        })}
-                                        disabled={sentOTP?.status === 200}
-                                    />
-                                    {signupForm.formState.errors.name && (
-                                        <p className="error text-start">{signupForm.formState.errors.name.message}</p>
-                                    )}
-
-                                    {/* Email Field */}
-                                    <TextField
-                                        className="w-100 mt-3"
-                                        label="Email"
-                                        size="small"
-                                        variant="outlined"
-                                        {...signupForm.register('email', {
-                                            required: 'Email is required',
-                                            pattern: {
-                                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                                message: 'Invalid email format',
-                                            },
-                                        })}
-                                        disabled={sentOTP?.status === 200}
-                                    />
-                                    {signupForm.formState.errors.email && (
-                                        <p className="error text-start">{signupForm.formState.errors.email.message}</p>
-                                    )}
-
-                                    {/* Phone Field */}
-                                    <TextField
-                                        className="w-100 mt-3"
-                                        label="Phone Number"
-                                        variant="outlined"
-                                        size="small"
-                                        inputProps={{ maxLength: 10 }}
-                                        {...signupForm.register('phone', {
-                                            required: 'Phone number is required',
-                                            pattern: {
-                                                value: /^[0-9]{10}$/,
-                                                message: 'Phone number must be exactly 10 digits',
-                                            },
-                                            onChange: (e) => {
-                                                const onlyDigits = e.target.value.replace(/\D/g, '');
-                                                if (onlyDigits.length <= 10) {
-                                                    signupForm.setValue('phone', onlyDigits);
-                                                }
-                                            },
-                                        })}
-                                    />
-                                    {signupForm.formState.errors.phone && (
-                                        <p className="error text-start">{signupForm.formState.errors.phone.message}</p>
-                                    )}
-
-
-                                    {/* Password Field */}
-                                    <TextField
-                                        className="w-100 mt-3"
-                                        label="Password"
-                                        size="small"
-                                        type={showPassword ? 'text' : 'password'}
-                                        variant="outlined"
-                                        {...signupForm.register('password', {
-                                            required: 'Password is required',
-                                            pattern: {
-                                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-                                                message: 'Password must be 8+ chars, include uppercase, lowercase, number & symbol',
-                                            },
-                                        })}
-                                        disabled={sentOTP?.status === 200}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                    {signupForm.formState.errors.password && (
-                                        <p className="error text-start">{signupForm.formState.errors.password.message}</p>
-                                    )}
-
-                                    {sentOTP?.status !== 200 && (
-                                        <button type="submit">{loading ? <ButtonLoading /> : "Register"}</button>
-                                    )}
-                                    {sentOTP?.status === 200 && (
-                                        <div className="otp-wrapper">
-                                            <TextField
-                                                className="w-100"
-                                                size="small"
-                                                label="Enter OTP"
-                                                variant="outlined"
-                                                {...otpForm.register('otp', { required: 'OTP is required' })}
+                                    <form onSubmit={signinForm.handleSubmit(handleSignIn)}>
+                                        <div className="form-group">
+                                            <label>Email Address</label>
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                placeholder="Enter your email"
+                                                {...signinForm.register('email', { required: 'Email is required' })}
                                             />
-                                            {otpForm.formState.errors.otp && (
-                                                <p className="error text-start">{otpForm.formState.errors.otp.message}</p>
+                                            {signinForm.formState.errors.email && (
+                                                <span className="error-text">{signinForm.formState.errors.email.message}</span>
                                             )}
-                                            <button type="button" onClick={otpForm.handleSubmit(handleVerifyOTP)}>
-                                                {loading ? <ButtonLoading /> : "Verify Email"}
-                                            </button>
                                         </div>
-                                    )}
 
+                                        <div className="form-group">
+                                            <label>Password</label>
+                                            <div className="password-input">
+                                                <input
+                                                    type={showPassword ? 'text' : 'password'}
+                                                    className="form-control"
+                                                    placeholder="Enter your password"
+                                                    {...signinForm.register('password', { required: 'Password is required' })}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="password-toggle"
+                                                    onClick={() => setShowPassword(!showPassword)}
+                                                >
+                                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                                </button>
+                                            </div>
+                                            {signinForm.formState.errors.password && (
+                                                <span className="error-text">{signinForm.formState.errors.password.message}</span>
+                                            )}
+                                        </div>
 
+                                        <div className="form-options">
+                                            <span className="forgot-link" onClick={() => setMode('forgot')}>
+                                                Forgot Password?
+                                            </span>
+                                        </div>
 
-                                    <p>
-                                        <span>Already have an account? </span>
-                                        <span
-                                            onClick={() => setMode('signin')}
-                                            style={{ color: '#007bff', cursor: 'pointer', textDecoration: 'underline' }}
-                                        >
-                                            Sign In
-                                        </span>
-                                    </p>
-                                </form>
-                            </div>
+                                        <button type="submit" className="auth-btn primary" disabled={loading}>
+                                            {loading ? <ButtonLoading /> : "Sign In"}
+                                        </button>
+                                    </form>
 
-                            {/* Forgot Password */}
-                            <ForgotPassword onBack={() => setMode('signin')} />
+                                    <div className="auth-divider">
+                                        <span>or continue with</span>
+                                    </div>
+
+                                    <div className="social-buttons">
+                                        <button className="social-btn google">
+                                            <FcGoogle /> Google
+                                        </button>
+                                        <button className="social-btn facebook">
+                                            <FaFacebook /> Facebook
+                                        </button>
+                                    </div>
+
+                                    <div className="auth-switch">
+                                        Don't have an account? 
+                                        <span onClick={() => setMode('signup')}> Sign Up</span>
+                                    </div>
+                                </div>
+                            )}
+
+                            {mode === 'signup' && (
+                                <div className="auth-form">
+                                    <div className="auth-header">
+                                        <h2>Create Account</h2>
+                                        <p>Join us for an amazing camping experience</p>
+                                    </div>
+
+                                    <form onSubmit={signupForm.handleSubmit(handleSignUp)}>
+                                        <div className="form-group">
+                                            <label>Full Name</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter your full name"
+                                                {...signupForm.register('name', {
+                                                    required: 'Name is required',
+                                                    pattern: {
+                                                        value: /^[A-Z][a-zA-Z ]*$/,
+                                                        message: 'First letter must be capital and only letters allowed',
+                                                    },
+                                                })}
+                                                disabled={sentOTP?.status === 200}
+                                            />
+                                            {signupForm.formState.errors.name && (
+                                                <span className="error-text">{signupForm.formState.errors.name.message}</span>
+                                            )}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Email Address</label>
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                placeholder="Enter your email"
+                                                {...signupForm.register('email', {
+                                                    required: 'Email is required',
+                                                    pattern: {
+                                                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                                        message: 'Invalid email format',
+                                                    },
+                                                })}
+                                                disabled={sentOTP?.status === 200}
+                                            />
+                                            {signupForm.formState.errors.email && (
+                                                <span className="error-text">{signupForm.formState.errors.email.message}</span>
+                                            )}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Phone Number</label>
+                                            <input
+                                                type="tel"
+                                                className="form-control"
+                                                placeholder="Enter your phone number"
+                                                maxLength="10"
+                                                {...signupForm.register('phone', {
+                                                    required: 'Phone number is required',
+                                                    pattern: {
+                                                        value: /^[0-9]{10}$/,
+                                                        message: 'Phone number must be exactly 10 digits',
+                                                    },
+                                                })}
+                                            />
+                                            {signupForm.formState.errors.phone && (
+                                                <span className="error-text">{signupForm.formState.errors.phone.message}</span>
+                                            )}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Password</label>
+                                            <div className="password-input">
+                                                <input
+                                                    type={showPassword ? 'text' : 'password'}
+                                                    className="form-control"
+                                                    placeholder="Create a password"
+                                                    {...signupForm.register('password', {
+                                                        required: 'Password is required',
+                                                        pattern: {
+                                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                                                            message: 'Password must be 8+ chars, include uppercase, lowercase, number & symbol',
+                                                        },
+                                                    })}
+                                                    disabled={sentOTP?.status === 200}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="password-toggle"
+                                                    onClick={() => setShowPassword(!showPassword)}
+                                                >
+                                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                                </button>
+                                            </div>
+                                            {signupForm.formState.errors.password && (
+                                                <span className="error-text">{signupForm.formState.errors.password.message}</span>
+                                            )}
+                                        </div>
+
+                                        {sentOTP?.status !== 200 && (
+                                            <button type="submit" className="auth-btn primary" disabled={loading}>
+                                                {loading ? <ButtonLoading /> : "Create Account"}
+                                            </button>
+                                        )}
+
+                                        {sentOTP?.status === 200 && (
+                                            <div className="otp-section">
+                                                <div className="form-group">
+                                                    <label>Verification Code</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        placeholder="Enter 6-digit code"
+                                                        maxLength="6"
+                                                        {...otpForm.register('otp', { required: 'OTP is required' })}
+                                                    />
+                                                    {otpForm.formState.errors.otp && (
+                                                        <span className="error-text">{otpForm.formState.errors.otp.message}</span>
+                                                    )}
+                                                </div>
+                                                <button 
+                                                    type="button" 
+                                                    className="auth-btn primary"
+                                                    onClick={otpForm.handleSubmit(handleVerifyOTP)}
+                                                    disabled={loading}
+                                                >
+                                                    {loading ? <ButtonLoading /> : "Verify Email"}
+                                                </button>
+                                            </div>
+                                        )}
+                                    </form>
+
+                                    <div className="auth-switch">
+                                        Already have an account? 
+                                        <span onClick={() => setMode('signin')}> Sign In</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    </div>
-                </Col>
-            </Row>
-        </Container>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
     );
 };
 
