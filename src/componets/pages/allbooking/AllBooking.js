@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Tab, Tabs, Card, Badge, Offcanvas, Button, Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { io } from 'socket.io-client';
 import { getEventBooking } from '../../redux/event/thunk';
 import { getGroundBooking } from '../../redux/ground/thunk';
 import { getUserFromSession } from '../../helper/api/apiCore';
@@ -9,12 +8,6 @@ import { DataLoading } from '../../helper/loading/Loaders';
 import BookingOffcanvas from './BookingOffcanvas';
 import ChatBox from './chatbox/ChatBox';
 import { IoMdEye, IoIosCalendar, IoIosPeople, IoIosTimer, IoIosPin, IoIosCash, IoIosCall, IoIosChatboxes } from 'react-icons/io';
-import axios from 'axios'; // For fetching messages
-
-const socket = io(process.env.REACT_APP_API_URL, {
-    withCredentials: true,
-    auth: { token: localStorage.getItem('token') }, // Assuming token is stored
-});
 
 const AllBooking = () => {
     const [activeTab, setActiveTab] = useState('ground');
@@ -23,9 +16,7 @@ const AllBooking = () => {
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [selectedChatBooking, setSelectedChatBooking] = useState(null);
     const [bookingType, setBookingType] = useState('');
-    const [chatType, setChatType] = useState('');
-    const [chatMessages, setChatMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
+    const [chatType, setChatType] = useState(''); // Added missing state
     const { ground, loading, error } = useSelector((state) => state.ground);
     const event = useSelector((state) => state.event);
     const eventLoading = useSelector((state) => state.event?.loading);
@@ -35,81 +26,24 @@ const AllBooking = () => {
     useEffect(() => {
         dispatch(getEventBooking(user?.id));
         dispatch(getGroundBooking(user?.id));
-    }, [dispatch, activeTab]);
+    }, [dispatch, user?.id]);
 
-    useEffect(() => {
-        // Handle Socket.IO connection
-        socket.on('connect', () => {
-            console.log('Connected to Socket.IO server');
-        });
-
-        socket.on('receiveMessage', (message) => {
-            setChatMessages((prev) => [...prev, message]);
-        });
-
-        socket.on('disconnect', () => {
-            console.log('Disconnected from Socket.IO server');
-        });
-
-        return () => {
-            socket.off('receiveMessage');
-            socket.off('connect');
-            socket.off('disconnect');
-        };
-    }, []);
-
-    const handleChat = async (item, type) => {
-        setSelectedChatBooking(item);
-        setChatType(type);
-        setShowChat(true);
-
-        socket.emit('joinBooking', item._id);
-
-        try {
-            const response = await axios.get(
-                `${process.env.REACT_APP_API_URL}/api/messages/booking/${item._id}`,
-                {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-                    withCredentials: true,
-                }
-            );
-            setChatMessages(response.data);
-        } catch (err) {
-            console.error('Error fetching messages:', err);
-        }
-    };
-
-    const handleSendMessage = (e) => {
-        e.preventDefault();
-        if (newMessage.trim() && selectedChatBooking) {
-            const messageData = {
-                bookingId: selectedChatBooking._id,
-                text: newMessage,
-                sender: 'user',
-                userId: user.id, // From getUserFromSession()
-            };
-            socket.emit('sendMessage', messageData);
-            setNewMessage('');
-        }
-    };
     const handleView = (item, type) => {
         setSelectedBooking(item);
         setBookingType(type);
         setShowOffcanvas(true);
     };
 
+    const handleChat = (item, type) => {
+        setSelectedChatBooking(item);
+        setChatType(type);
+        setShowChat(true);
+    };
+
     const handleClose = () => {
         setShowOffcanvas(false);
         setSelectedBooking(null);
         setBookingType('');
-    };
-
-    const handleCloseChat = () => {
-        setShowChat(false);
-        setSelectedChatBooking(null);
-        setChatType('');
-        setChatMessages([]);
-        setNewMessage('');
     };
 
     const getStatusVariant = (status) => {
@@ -402,13 +336,10 @@ const AllBooking = () => {
 
             <ChatBox
                 showChat={showChat}
-                handleCloseChat={handleCloseChat}
+                handleCloseChat={() => setShowChat(false)}
                 chatType={chatType}
                 selectedChatBooking={selectedChatBooking}
-                chatMessages={chatMessages}
-                handleSendMessage={handleSendMessage}
-                newMessage={newMessage}
-                setNewMessage={setNewMessage}
+                user={user}
             />
 
             <style jsx>{`
